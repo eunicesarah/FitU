@@ -20,7 +20,8 @@ cur.execute("""
             description text,
             goals text,
             duration text,
-            repetition text
+            repetition integer,
+            gif text
             )
             """)
 
@@ -31,23 +32,34 @@ cur.execute("""
             name text,
             title_program text,
             calories integer,
-            date text
+            date text,
             tot_duration integer
             )
             """)
 
 cur.execute("""
             INSERT INTO daftar_latihan 
-                (exercise_id, title, description, goals, duration, repetition)
+                (exercise_id, title, description, goals, duration, repetition, gif)
             VALUES 
-                (001, 'Push Up', 'Push-ups are exercises to strengthen your arms and \nchest muscles. They are done by lying with your face \ntowards the floor and pushing with your hands to \nraise your body until your arms are straight.', '10 Repetition', '../img/push-up.png', 'https://www.youtube.com/watch?v=bTJIkQRsmaE', NULL),
-                ("Sit Up", "Sit-ups are exercises that you do to strengthen your \nstomach muscles. They involve sitting up from a lying \nposition while keeping your legs straight on the floor.", "10 Repetition", "../img/sit-up.png", "https://www.youtube.com/watch?v=6eJVLbgxbBE", NULL),
-                ("Pull Up", "A pull-up is an upper-body strength exercise. The \npull-up is a closed-chain movement where the body \nis suspended by the hands and pulls up.", "10 Repetition", "../img/pull-up.png", "https://www.youtube.com/watch?v=eGo4IYlbE5g", NULL),
-                ("Jumping Rope", "Jumping rope is jumping over a rope held with \none end in each hand as the rope is repeatedly \nspun over the head and under the feet.", "20 Repetition", "../img/jumping-rope.png", "https://www.youtube.com/watch?v=FJmRQ5iTXKE", NULL),
-                ("Weightlifting", "Weight training is a common type of strength training \nfor developing the strength and size of skeletal \nmuscles.", "70Kg", "../img/weightlifting.png", "https://www.youtube.com/watch?v=RP85w6g7jPU", NULL),
-                ("Swimming", "The propulsion of the body through water by \ncombined arm and leg motions and the natural \nflotation of the body.", "300 meters", "../img/swimming.png", "https://www.youtube.com/watch?v=gh5mAtmeR3Y", NULL),
-                ("Running", "Running is a form of exercise that is usually \ndone to develop the speed and endurance of the body.", "5Km", "../img/running.png", "https://www.youtube.com/watch?v=ZQQ6_XQQxQ4", NULL)
+                (201, 'Push Up', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor','Goals', NULL, 10, '../img/push-up.gif'),
+                (202, "Sit Up", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
+                (203, "Pull Up", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
+                (204, "Squat Jump", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
+                (205, "Lunges", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
+                (206, "Crunches", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
+                (207, "Burpees", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
+                (208, "Bicycle Crunch", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
+                (101, "Jumping Rope", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
+                (102, "Running", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
+                (103, "Jumping Jacks", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
+                (104, "Plank", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
+                (105, "Bridge", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
+                (106, "High Knees", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
+                (107, "Squat", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
+                (108, "Russian Twist", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL,"../img/")
             """)
+
+con.commit()
 # cur.execute("""
 #             INSERT INTO daftar_request
 #                 (user_id, trainer_id, umur, jenis_kelamin, berat_badan, tinggi_badan, tujuan, status, title, description)
@@ -66,10 +78,9 @@ cur.execute("""
 #                 (2, 7, False)
 #             """)
 
-# a = cur.execute("Select * from list_olahraga")
 
-# a = cur.fetchall()
+# daftarLatihan = cur.execute("SELECT * FROM daftar_latihan")
+# daftarLatihan = daftarLatihan.fetchall()
 
-# for i in a:
+# for i in daftarLatihan:
 #     print(i)
-
