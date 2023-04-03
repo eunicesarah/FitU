@@ -57,7 +57,7 @@ class dashboard(QWidget):
 
         # masukkan logo
         logo = QLabel(self)
-        logo.setPixmap(QPixmap('../img/logo-dashboard.png'))
+        logo.setPixmap(QPixmap('img/logo-dashboard.png'))
         logo.move(60, 45)
 
         # tombol home
@@ -143,7 +143,7 @@ class dashboard(QWidget):
         
         # foto profil
         profilePhoto = QLabel(self)
-        profilePhoto.setPixmap(QPixmap('../img/profile-dashboard.png'))
+        profilePhoto.setPixmap(QPixmap('img/profile-dashboard.png'))
         profilePhoto.move(1133, 45)
 
         # say Hello
@@ -180,7 +180,7 @@ class dashboard(QWidget):
 
         # membuat history card
         card = QLabel(self)
-        card.setPixmap(QPixmap('../img/card-dashboard.png'))
+        card.setPixmap(QPixmap('img/card-dashboard.png'))
         card.move(633, 172) 
 
         kiri = QPushButton(self)
