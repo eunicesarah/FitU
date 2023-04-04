@@ -78,13 +78,13 @@ class listLatihan(QMainWindow):
         homeButton.setStyleSheet(f'''
         QPushButton {{
             color: {text_color};
-            background-color: {button_color};
+            background-color: {background};
             border: none;
             border-radius: 20px;
         }}
         ''') 
         homeButton.setFont(buttonFont)
-        homeButton.setFixedSize(96, 42) #pake ini buat kalau dia buletan
+        # homeButton.setFixedSize(96, 42) #pake ini buat kalau dia buletan
         # homeButton.move(507, 53)    
         homeButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
@@ -127,12 +127,13 @@ class listLatihan(QMainWindow):
         listButton.setStyleSheet(f'''
         QPushButton {{
             color: {text_color};
-            background-color: {background};
+            background-color: {button_color};
             border: none;
             border-radius: 20px;
         }}
         ''')
         listButton.setFont(buttonFont)
+        listButton.setFixedSize(96, 42)
         # listButton.move(898, 58)
         listButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
@@ -159,27 +160,58 @@ class listLatihan(QMainWindow):
         # profilePhoto.move(1133, 45)
         
         kotakKecil = QLabel()
-        kotakKecil.setFixedSize(10,5)
+        kotakKecil.setFixedSize(5,5)
         kotakKecil2 = QLabel()
-        kotakKecil2.setFixedSize(50,10)
+        kotakKecil2.setFixedSize(10,10)
+        kotakKecil3 = QLabel()
+        kotakKecil3.setFixedSize(30,30)
+        kotakKecil4 = QLabel()
+        kotakKecil4.setFixedSize(50,50)
+        kotakKecil5 = QLabel()
+        kotakKecil5.setFixedSize(3,3)
+        # kotakKecil5.setFixedSize(10,10)
         
         self.vbox.addWidget(kotakKecil)
-        # self.vbox.addWidget(kotakKecil)
-        # self.vbox.addWidget(kotakKecil)
+        self.vbox.addWidget(kotakKecil)
+        self.vbox.addWidget(kotakKecil)
+        self.vbox.addWidget(kotakKecil)
+        self.vbox.addWidget(kotakKecil)
+        self.vbox.addWidget(kotakKecil5)
         
         hbox = QHBoxLayout()
+        hbox.setSpacing(0)
+        hbox.setContentsMargins(0,0,0,0)
         hbox.addWidget(logo)
-        hbox.addWidget(kotakKecil)
+        hbox.addWidget(kotakKecil4)
+        hbox.addWidget(kotakKecil4)
+        hbox.addWidget(kotakKecil4)
+        hbox.addWidget(kotakKecil4)
+        hbox.addWidget(kotakKecil4)
+        hbox.addWidget(kotakKecil4)
         hbox.addWidget(kotakKecil2)
-        hbox.addWidget(kotakKecil2)
+        hbox.addWidget(kotakKecil5)
         hbox.addWidget(homeButton)
-        hbox.addWidget(customizeButton)
-        hbox.addWidget(planButton)
-        hbox.addWidget(listButton)
-        hbox.addWidget(historyButton)
-        hbox.addWidget(profilePhoto)
         hbox.addWidget(kotakKecil)
-        hbox.setSpacing(50)
+        hbox.addWidget(kotakKecil4)
+        hbox.addWidget(customizeButton)
+        hbox.addWidget(kotakKecil3)
+        hbox.addWidget(kotakKecil2)
+        hbox.addWidget(kotakKecil)
+        hbox.addWidget(planButton)
+        hbox.addWidget(kotakKecil)
+        hbox.addWidget(listButton)
+        hbox.addWidget(kotakKecil2)
+        hbox.addWidget(kotakKecil5)
+        hbox.addWidget(historyButton)
+        hbox.addWidget(kotakKecil4)
+        hbox.addWidget(kotakKecil2)
+        hbox.addWidget(kotakKecil2)
+        hbox.addWidget(kotakKecil5)
+        hbox.addWidget(kotakKecil)
+        hbox.addWidget(profilePhoto)
+        hbox.addWidget(kotakKecil4)
+        hbox.addWidget(kotakKecil2)
+        hbox.addWidget(kotakKecil5)
         hbox.setAlignment(Qt.AlignmentFlag.AlignRight)
         
         
@@ -192,11 +224,6 @@ class listLatihan(QMainWindow):
         
         kotakKecil.setFixedSize(10,10)
         
-        # kotakKecil = QLabel()
-        # kotakKecil.setFixedSize(266,166)
-        # kotakKecil.setStyleSheet(stylesheet2)
-        # kotakKecil.setText("Kotak Kecil")
-        # kotakKecil.setFont(QFont("Segoe UI", 20))
         
 
         pixmap1 = QPixmap("../img/push-up.gif")
