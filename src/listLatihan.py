@@ -15,14 +15,27 @@ class listLatihan(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setBackgroundRole(QPalette.ColorRole.Dark)
+        self.con = sqlite3.connect('fitu.db')
+        self.listLat = self.fetchListLatihan()
+        self.setUpListLatihanWindow()
+        self.initUI()
+        
+    def fetchListLatihan(self):
+        cur = self.con.cursor()
+        rows = cur.execute("SELECT * FROM daftar_latihan")
+        rows = cur.fetchall()
+        cur.close()
+        
+        return rows
+
+    def setUpListLatihanWindow(self):
         self.resize(1280,720)
         self.setWindowIcon(QIcon("../img/logo.png"))
         self.setWindowTitle("Fit-U - Daftar Latihan")
         self.setStyleSheet('background-color: #5A8D6C;')
-        self.initUI()
-
+        
     def initUI(self):
+        
         self.scroll = QScrollArea()             # Scroll Area which contains the widgets, set as the centralWidget
         self.widget = QWidget()                 # Widget that contains the collection of Vertical Box
         self.vbox = QVBoxLayout()               # The Vertical Box that contains the Horizontal Boxes of  labels and buttons
@@ -164,16 +177,16 @@ class listLatihan(QMainWindow):
         kotakKecil5 = QLabel()
         kotakKecil5.setFixedSize(3,3)
         
-        self.vbox.addWidget(kotakKecil)
-        self.vbox.addWidget(kotakKecil)
-        self.vbox.addWidget(kotakKecil)
-        self.vbox.addWidget(kotakKecil)
-        self.vbox.addWidget(kotakKecil)
-        self.vbox.addWidget(kotakKecil5)
+        # self.vbox.addWidget(kotakKecil)
+        # self.vbox.addWidget(kotakKecil)
+        # self.vbox.addWidget(kotakKecil)
+        # self.vbox.addWidget(kotakKecil)
+        # self.vbox.addWidget(kotakKecil)
+        # self.vbox.addWidget(kotakKecil5)
         
         hbox = QHBoxLayout()
         hbox.setSpacing(0)
-        hbox.setContentsMargins(0,0,0,0)
+        hbox.setContentsMargins(0,50,63,0)
         hbox.addWidget(logo)
         hbox.addWidget(kotakKecil4)
         hbox.addWidget(kotakKecil4)
@@ -202,9 +215,9 @@ class listLatihan(QMainWindow):
         hbox.addWidget(kotakKecil5)
         hbox.addWidget(kotakKecil)
         hbox.addWidget(profilePhoto)
-        hbox.addWidget(kotakKecil4)
-        hbox.addWidget(kotakKecil2)
-        hbox.addWidget(kotakKecil5)
+        # hbox.addWidget(kotakKecil4)
+        # hbox.addWidget(kotakKecil2)
+        # hbox.addWidget(kotakKecil5)
         hbox.setAlignment(Qt.AlignmentFlag.AlignRight)
         
         
@@ -227,7 +240,7 @@ class listLatihan(QMainWindow):
         card1.setWordWrap(True)
         card1.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         
-        text = "<b><p><font style='font-size:24px;' color='purple'>PUSH UP</font><tab></p></b> <b><p><font color='red' style='font-size:14px;'>10 Repetisi</font></p><b> <b><p><font color='aqua'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor</font></p></b>"
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[0][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[0][4]} Repetisi</font></p><b> <b><p><font color="aqua">{self.listLat[0][2]}</font></p></b>'
         card101 = QLabel()
         card101.setFixedSize(266, 168)
         card101.setStyleSheet(stylesheet3)
@@ -236,6 +249,7 @@ class listLatihan(QMainWindow):
         card101.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[1][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[1][4]} Repetisi</font></p><b> <b><p><font color="aqua">{self.listLat[1][2]}</font></p></b>'
         card2 = QLabel()
         card2.setFixedSize(266, 100)
         card2.setStyleSheet(stylesheet2)
@@ -250,6 +264,7 @@ class listLatihan(QMainWindow):
         card102.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[2][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[2][4]} Repetisi</font></p><b> <b><p><font color="aqua">{self.listLat[2][2]}</font></p></b>'
         card3 = QLabel()
         card3.setFixedSize(266, 100)
         card3.setStyleSheet(stylesheet2)
@@ -264,6 +279,7 @@ class listLatihan(QMainWindow):
         card103.setAlignment(Qt.AlignmentFlag.AlignJustify)    
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[3][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[3][4]} Repetisi</font></p><b> <b><p><font color="aqua">{self.listLat[3][2]}</font></p></b>'
         card4 = QLabel()
         card4.setFixedSize(266, 100)
         card4.setStyleSheet(stylesheet2)
@@ -278,6 +294,7 @@ class listLatihan(QMainWindow):
         card104.setAlignment(Qt.AlignmentFlag.AlignJustify)   
 
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[4][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[4][4]} Repetisi</font></p><b> <b><p><font color="aqua">{self.listLat[4][2]}</font></p></b>'
         card5 = QLabel()
         card5.setFixedSize(266, 100)
         card5.setStyleSheet(stylesheet2)
@@ -292,6 +309,7 @@ class listLatihan(QMainWindow):
         card105.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[5][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[5][4]} Repetisi</font></p><b> <b><p><font color="aqua">{self.listLat[5][2]}</font></p></b>'
         card6 = QLabel()
         card6.setFixedSize(266, 100)
         card6.setStyleSheet(stylesheet2)
@@ -306,6 +324,7 @@ class listLatihan(QMainWindow):
         card106.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[6][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[6][4]} Repetisi</font></p><b> <b><p><font color="aqua">{self.listLat[6][2]}</font></p></b>'
         card7 = QLabel()
         card7.setFixedSize(266, 100)
         card7.setStyleSheet(stylesheet2)
@@ -320,6 +339,7 @@ class listLatihan(QMainWindow):
         card107.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[7][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[7][4]} Repetisi</font></p><b> <b><p><font color="aqua">{self.listLat[7][2]}</font></p></b>'
         card8 = QLabel()
         card8.setFixedSize(266, 100)
         card8.setStyleSheet(stylesheet2)
@@ -333,7 +353,7 @@ class listLatihan(QMainWindow):
         card108.setWordWrap(True)
         card108.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
-        
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[8][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[8][5]} Detik</font></p><b> <b><p><font color="aqua">{self.listLat[8][2]}</font></p></b>'
         card9 = QLabel()
         card9.setFixedSize(266, 100)
         card9.setStyleSheet(stylesheet2)
@@ -348,6 +368,8 @@ class listLatihan(QMainWindow):
         card109.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[9][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[9][5]} Detik</font></p><b> <b><p><font color="aqua">{self.listLat[9][2]}</font></p></b>'
         card10 = QLabel()
         card10.setFixedSize(266, 100)
         card10.setStyleSheet(stylesheet2)
@@ -362,6 +384,7 @@ class listLatihan(QMainWindow):
         card110.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[10][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[10][5]} Detik</font></p><b> <b><p><font color="aqua">{self.listLat[10][2]}</font></p></b>'
         card11 = QLabel()
         card11.setFixedSize(266, 100)
         card11.setStyleSheet(stylesheet2)
@@ -376,6 +399,7 @@ class listLatihan(QMainWindow):
         card111.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[11][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[11][5]} Detik</font></p><b> <b><p><font color="aqua">{self.listLat[11][2]}</font></p></b>'
         card12 = QLabel()
         card12.setFixedSize(266, 100)
         card12.setStyleSheet(stylesheet2)
@@ -390,6 +414,7 @@ class listLatihan(QMainWindow):
         card112.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[12][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[12][5]} Detik</font></p><b> <b><p><font color="aqua">{self.listLat[12][2]}</font></p></b>'
         card13 = QLabel()
         card13.setFixedSize(266, 100)
         card13.setStyleSheet(stylesheet2)
@@ -404,6 +429,7 @@ class listLatihan(QMainWindow):
         card113.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[13][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[13][5]} Detik</font></p><b> <b><p><font color="aqua">{self.listLat[13][2]}</font></p></b>'
         card14 = QLabel()
         card14.setFixedSize(266, 100)
         card14.setStyleSheet(stylesheet2)
@@ -418,6 +444,7 @@ class listLatihan(QMainWindow):
         card114.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[14][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[14][5]} Detik</font></p><b> <b><p><font color="aqua">{self.listLat[14][2]}</font></p></b>'
         card15 = QLabel()
         card15.setFixedSize(266, 100)
         card15.setStyleSheet(stylesheet2)
@@ -432,6 +459,7 @@ class listLatihan(QMainWindow):
         card115.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
         
+        text = f'<b><p><font style="font-size:24px;" color="purple">{self.listLat[15][1]}</font><tab></p></b> <b><p><font color="red" style="font-size:14px;">{self.listLat[15][5]} Detik</font></p><b> <b><p><font color="aqua">{self.listLat[15][2]}</font></p></b>'
         card16 = QLabel()
         card16.setFixedSize(266, 100)
         card16.setStyleSheet(stylesheet2)
