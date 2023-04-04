@@ -83,9 +83,7 @@ class listLatihan(QMainWindow):
             border-radius: 20px;
         }}
         ''') 
-        homeButton.setFont(buttonFont)
-        # homeButton.setFixedSize(96, 42) #pake ini buat kalau dia buletan
-        # homeButton.move(507, 53)    
+        homeButton.setFont(buttonFont)   
         homeButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
         
@@ -101,7 +99,6 @@ class listLatihan(QMainWindow):
         }}
         ''')
         customizeButton.setFont(buttonFont)
-        # customizeButton.move(649, 58)
         customizeButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
         
@@ -117,7 +114,6 @@ class listLatihan(QMainWindow):
         }}
         ''')
         planButton.setFont(buttonFont)
-        # planButton.move(807, 58)
         planButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
 
@@ -134,7 +130,6 @@ class listLatihan(QMainWindow):
         ''')
         listButton.setFont(buttonFont)
         listButton.setFixedSize(96, 42)
-        # listButton.move(898, 58)
         listButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
         
@@ -150,14 +145,13 @@ class listLatihan(QMainWindow):
         }}
         ''')
         historyButton.setFont(buttonFont)
-        # historyButton.move(979, 58)
         historyButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
         
         # foto profil
         profilePhoto = QLabel()
         profilePhoto.setPixmap(QPixmap('../img/profile-dashboard.png'))
-        # profilePhoto.move(1133, 45)
+
         
         kotakKecil = QLabel()
         kotakKecil.setFixedSize(5,5)
@@ -169,7 +163,6 @@ class listLatihan(QMainWindow):
         kotakKecil4.setFixedSize(50,50)
         kotakKecil5 = QLabel()
         kotakKecil5.setFixedSize(3,3)
-        # kotakKecil5.setFixedSize(10,10)
         
         self.vbox.addWidget(kotakKecil)
         self.vbox.addWidget(kotakKecil)
@@ -235,12 +228,12 @@ class listLatihan(QMainWindow):
         card1.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         
         text = "<b><p><font style='font-size:24px;' color='purple'>PUSH UP</font><tab></p></b> <b><p><font color='red' style='font-size:14px;'>10 Repetisi</font></p><b> <b><p><font color='aqua'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor</font></p></b>"
-        card101 = QLabel(text)
+        card101 = QLabel()
         card101.setFixedSize(266, 168)
         card101.setStyleSheet(stylesheet3)
+        card101.setText(text)
         card101.setWordWrap(True)
         card101.setAlignment(Qt.AlignmentFlag.AlignJustify)
-        # card101.setText(text)
         
         
         card2 = QLabel()
@@ -256,11 +249,13 @@ class listLatihan(QMainWindow):
         card102.setWordWrap(True)
         card102.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card3 = QLabel()
         card3.setFixedSize(266, 100)
         card3.setStyleSheet(stylesheet2)
         card3.setPixmap(pixmap1.scaled(100,100))
         card3.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card103 = QLabel()
         card103.setFixedSize(266, 168)
         card103.setStyleSheet(stylesheet3)
@@ -268,11 +263,13 @@ class listLatihan(QMainWindow):
         card103.setWordWrap(True)  
         card103.setAlignment(Qt.AlignmentFlag.AlignJustify)    
         
+        
         card4 = QLabel()
         card4.setFixedSize(266, 100)
         card4.setStyleSheet(stylesheet2)
         card4.setPixmap(pixmap1.scaled(100,100))
         card4.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card104 = QLabel()
         card104.setFixedSize(266, 168)
         card104.setStyleSheet(stylesheet3)
@@ -286,6 +283,7 @@ class listLatihan(QMainWindow):
         card5.setStyleSheet(stylesheet2)
         card5.setPixmap(pixmap1.scaled(100,100))
         card5.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card105 = QLabel()
         card105.setFixedSize(266, 168)
         card105.setStyleSheet(stylesheet3)
@@ -293,11 +291,13 @@ class listLatihan(QMainWindow):
         card105.setWordWrap(True)
         card105.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card6 = QLabel()
         card6.setFixedSize(266, 100)
         card6.setStyleSheet(stylesheet2)
         card6.setPixmap(pixmap1.scaled(100,100))
         card6.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card106 = QLabel()
         card106.setFixedSize(266, 168)
         card106.setStyleSheet(stylesheet3)
@@ -305,11 +305,13 @@ class listLatihan(QMainWindow):
         card106.setWordWrap(True)
         card106.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card7 = QLabel()
         card7.setFixedSize(266, 100)
         card7.setStyleSheet(stylesheet2)
         card7.setPixmap(pixmap1.scaled(100,100))
         card7.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card107 = QLabel()
         card107.setFixedSize(266, 168)
         card107.setStyleSheet(stylesheet3)
@@ -317,11 +319,13 @@ class listLatihan(QMainWindow):
         card107.setWordWrap(True)
         card107.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card8 = QLabel()
         card8.setFixedSize(266, 100)
         card8.setStyleSheet(stylesheet2)
         card8.setPixmap(pixmap1.scaled(100,100))
         card8.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card108 = QLabel()
         card108.setFixedSize(266, 168)
         card108.setStyleSheet(stylesheet3)
@@ -329,11 +333,13 @@ class listLatihan(QMainWindow):
         card108.setWordWrap(True)
         card108.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card9 = QLabel()
         card9.setFixedSize(266, 100)
         card9.setStyleSheet(stylesheet2)
         card9.setPixmap(pixmap1.scaled(100,100))
         card9.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card109 = QLabel()
         card109.setFixedSize(266, 168)
         card109.setStyleSheet(stylesheet3)
@@ -341,11 +347,13 @@ class listLatihan(QMainWindow):
         card109.setWordWrap(True)
         card109.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card10 = QLabel()
         card10.setFixedSize(266, 100)
         card10.setStyleSheet(stylesheet2)
         card10.setPixmap(pixmap1.scaled(100,100))
         card10.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card110 = QLabel()
         card110.setFixedSize(266, 168)
         card110.setStyleSheet(stylesheet3)
@@ -353,11 +361,13 @@ class listLatihan(QMainWindow):
         card110.setWordWrap(True)
         card110.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card11 = QLabel()
         card11.setFixedSize(266, 100)
         card11.setStyleSheet(stylesheet2)
         card11.setPixmap(pixmap1.scaled(100,100))
         card11.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card111 = QLabel()
         card111.setFixedSize(266, 168)
         card111.setStyleSheet(stylesheet3)
@@ -365,11 +375,13 @@ class listLatihan(QMainWindow):
         card111.setWordWrap(True)
         card111.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card12 = QLabel()
         card12.setFixedSize(266, 100)
         card12.setStyleSheet(stylesheet2)
         card12.setPixmap(pixmap1.scaled(100,100))
         card12.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card112 = QLabel()
         card112.setFixedSize(266, 168)
         card112.setStyleSheet(stylesheet3)
@@ -377,11 +389,13 @@ class listLatihan(QMainWindow):
         card112.setWordWrap(True)
         card112.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card13 = QLabel()
         card13.setFixedSize(266, 100)
         card13.setStyleSheet(stylesheet2)
         card13.setPixmap(pixmap1.scaled(100,100))
         card13.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card113 = QLabel()
         card113.setFixedSize(266, 168)
         card113.setStyleSheet(stylesheet3)
@@ -389,11 +403,13 @@ class listLatihan(QMainWindow):
         card113.setWordWrap(True)
         card113.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card14 = QLabel()
         card14.setFixedSize(266, 100)
         card14.setStyleSheet(stylesheet2)
         card14.setPixmap(pixmap1.scaled(100,100))
         card14.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card114 = QLabel()
         card114.setFixedSize(266, 168)
         card114.setStyleSheet(stylesheet3)
@@ -401,11 +417,13 @@ class listLatihan(QMainWindow):
         card114.setWordWrap(True)
         card114.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card15 = QLabel()
         card15.setFixedSize(266, 100)
         card15.setStyleSheet(stylesheet2)
         card15.setPixmap(pixmap1.scaled(100,100))
         card15.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card115 = QLabel()
         card115.setFixedSize(266, 168)
         card115.setStyleSheet(stylesheet3)
@@ -413,11 +431,13 @@ class listLatihan(QMainWindow):
         card115.setWordWrap(True)
         card115.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         card16 = QLabel()
         card16.setFixedSize(266, 100)
         card16.setStyleSheet(stylesheet2)
         card16.setPixmap(pixmap1.scaled(100,100))
         card16.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        
         card116 = QLabel()
         card116.setFixedSize(266, 168)
         card116.setStyleSheet(stylesheet3)
@@ -425,9 +445,9 @@ class listLatihan(QMainWindow):
         card116.setWordWrap(True)
         card116.setAlignment(Qt.AlignmentFlag.AlignJustify)
         
+        
         self.vbox.setSpacing(0)
         self.vbox.setContentsMargins(0, 0,0,0)
-        
         
         hbox1 = QHBoxLayout()
         hbox1.addWidget(card1)
@@ -516,10 +536,6 @@ class listLatihan(QMainWindow):
 
         return
 
-        
-# con = sqlite3.connect("fitu.db")
-# cur = con.cursor()
-# daftarLatihan = cur.execute("SELECT * FROM daftar_latihan")
 
 if(__name__ == "__main__"):
     app = QtWidgets.QApplication(sys.argv)
