@@ -3,7 +3,9 @@ import sys
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon, QPixmap, QCursor, QFont
-from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QGridLayout, QGroupBox, QRadioButton, QCheckBox, QMessageBox, QLabel, QLineEdit, QVBoxLayout, QPushButton)
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QGridLayout,
+                             QGroupBox, QRadioButton, QCheckBox, QMessageBox,
+                             QLabel, QLineEdit, QVBoxLayout, QPushButton, QScrollArea)
 
 background = '#5A8D6C'
 button_color = '#174728'
@@ -52,6 +54,14 @@ class customizeWorkout(QWidget):
             "color: #EEEEE2;"
             "background-color: #174728;"
             "border-radius: 20px;"
+            f'''
+        QPushButton {{
+            color: {text_color};
+            background-color: {background};
+            border: none;
+            border-radius: 20px;
+        }}
+        '''
         )
         
         styleSheet5 = (
@@ -151,13 +161,63 @@ class customizeWorkout(QWidget):
         profilePhoto = QLabel(self)
         profilePhoto.setPixmap(QPixmap('img/profile-dashboard.png'))
         profilePhoto.move(1133, 45)
+        #Membuat scroll area
         
-        #greenCard2
+        # scroll.setWidgetResizable(True)
+        #greenCard
         greenCard = QLabel(self)
         greenCard.move(116.67, 155.33)
         greenCard.setFixedSize(429.79, 534.56)
         greenCard.setStyleSheet(styleSheet)
+        # scroll.setWidget(greenCard)
+        scroll = QScrollArea(self)
+        scroll.setGeometry(130, 250, 410, 429) # mengatur posisi dan ukuran QScrollArea
+        scroll.setStyleSheet("background-color: #D2DCC4;border-radius: none;")
+        scrollWidget = QWidget(scroll)
+        scrollLayout = QVBoxLayout(scrollWidget)
+        scrollWidget.setStyleSheet("background-color: #D2DCC4; border-radius: 20px;")
+        scrollWidget.setLayout(scrollLayout)
+        vertical_scrollbar = scroll.verticalScrollBar()
+        # Mengatur bentuk scroll bar
+        scroll_bar_style = """
+            QScrollBar:vertical {
+                background-color: #D2DCC4;
+                width: 20px;
+                margin: 20px 0 20px 0;
+            }
+            QScrollBar::handle:vertical {
+                background-color: #5A8D6C;
+                border-radius: 10px;
+            }
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                height: 20px;
+                background-color: #D2DCC4;
+                subcontrol-origin: margin;
+                subcontrol-position: top;
+            }
+            QScrollBar::add-line:vertical {
+                top: 0;
+            }
+            QScrollBar::sub-line:vertical {
+                bottom: 0;
+            }
+        """
+        scroll.verticalScrollBar().setStyleSheet(scroll_bar_style)
+        for i in range(20):
+            exLabel = QLabel()
+           
+            exLabel.setFixedSize(366.67, 99.33)
+            exLabel.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
+            exLabel1 = QLabel(exLabel)
+            exLabel1.move(10, 10)
+            exLabel1.setFixedSize(78.89, 78.89)
+            exLabel1.setStyleSheet(styleSheet5)
+            scrollLayout.addWidget(exLabel)
+            
+        scroll.setWidget(scrollWidget)
         
+        # mengatur teks pada QLabel
+        # greenCard.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eleifend tortor id lacus finibus, at luctus mi aliquet. Donec vel ligula vel augue vehicula vestibulum sed eu lacus. Ut interdum, sapien id aliquet consectetur, eros ipsum faucibus est, in auctor sapien arcu vel leo. Morbi et velit vel lacus semper pharetra. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam euismod nunc et blandit vehicula. Morbi id turpis id odio vulputate pellentesque vel vel quam. Proin eget sapien feugiat, commodo nibh a, dictum massa. Integer non ante mi. Vivamus suscipit eros at faucibus consequat. Nunc vestibulum nibh quam, in bibendum turpis laoreet quis. Duis hendrerit nisi quis tellus interdum, vel hendrerit tellus venenatis. Donec rhoncus bibendum rutrum.")
         #greenCard2
         greenCard2 = QLabel(self)
         greenCard2.move(577.33, 155.33)
@@ -212,7 +272,7 @@ class customizeWorkout(QWidget):
         exLabel1.move(727.59, 270.2)
         exLabel1.setFixedSize(78.89, 78.89)
         exLabel1.setStyleSheet(styleSheet5)
-        
+    
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = customizeWorkout()
