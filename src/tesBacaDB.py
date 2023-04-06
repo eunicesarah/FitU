@@ -36,9 +36,23 @@ cur.execute("""
             tot_duration integer
             )
             """)
+cur.execute("""
+            CREATE TABLE IF NOT EXISTS program (
+            program_id integer PRIMARY KEY AUTOINCREMENT,
+            title_program text
+            )
+            """)
 
 cur.execute("""
-            INSERT INTO daftar_latihan 
+            CREATE TABLE IF NOT EXISTS latihan_program (
+            program_id integer,
+            exercise_id integer,
+            FOREIGN KEY (program_id) REFERENCES program (program_id)
+            )
+            """)
+
+cur.execute("""
+            INSERT or IGNORE INTO daftar_latihan 
                 (exercise_id, title, description, goals, duration, repetition, gif)
             VALUES 
                 (201, 'Push Up', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor','Goals', NULL, 10, '../img/push-up.gif'),
@@ -59,7 +73,48 @@ cur.execute("""
                 (108, "Russian Twist", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL,"../img/")
             """)
 
+cur.execute("""
+            INSERT or IGNORE INTO program
+                (program_id, title_program)
+            VALUES
+                (1, 'Full Body Workout'),
+                (2, 'Upper Body Workout'),
+                (3, 'Lower Body Workout'),
+                (4, 'Core Workout')
+            """)
+
+cur.execute("""
+            INSERT or IGNORE INTO latihan_program
+                (program_id, exercise_id)
+            VALUES
+                (1, 201),
+                (1, 202),
+                (1, 203),
+                (1, 204),
+                (1, 205),
+                (1, 206),
+                (2, 207),
+                (2, 208),
+                (2, 201),
+                (2, 202),
+                (2, 203),
+                (2, 204),
+                (3, 205),
+                (3, 206),
+                (3, 207),
+                (3, 208),
+                (3, 201),
+                (3, 202),
+                (4, 203),
+                (4, 204),
+                (4, 205),
+                (4, 206),
+                (4, 207),
+                (4, 208)
+            """)
+
 con.commit()
+con.close()
 # cur.execute("""
 #             INSERT INTO daftar_request
 #                 (user_id, trainer_id, umur, jenis_kelamin, berat_badan, tinggi_badan, tujuan, status, title, description)
