@@ -11,7 +11,7 @@ text_color = '#EEEEE2'
 card_color = '#D2DCC4'
 
 class dashboard(QWidget):
-
+    switch = pyqtSignal(str, dict)
     def __init__(self, user=None):
         super().__init__()
         if (user == None):
@@ -231,6 +231,11 @@ class dashboard(QWidget):
         prog.move(667, 317)
         prog.setFont(historyFont)
         prog.setAlignment(Qt.AlignmentFlag.AlignLeft)
+    def showRegister(self):
+        self.switch.emit(self, "register")
+    
+    def listLatihann(self):
+        self.switch.emit(self, "listLatihan")
 
 
 
