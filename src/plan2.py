@@ -1,6 +1,6 @@
 import sqlite3
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QLineEdit, QPushButton, QRadioButton, QCheckBox, QMessageBox
-from PyQt6.QtGui import QFont, QPixmap, QCursor, QMovie
+from PyQt6.QtGui import QFont, QPixmap, QCursor, QMovie, QIcon
 from PyQt6.QtCore import Qt, QSize
 import sys
 class plan(QWidget):
@@ -37,22 +37,38 @@ class plan(QWidget):
         self.movie.setScaledSize(QSize(330, 305))
         self.movie.setSpeed(60)
 
-        nextButton = QPushButton(">", self)
+        nextButton = QPushButton(self)
         nextButton.setGeometry(200, 150, 100, 100)
-        nextButton.resize(93, 89)
-        nextButton.setStyleSheet("background-color: #5A8D6C; color: #EEEEE2; border-radius: 25px; border: 2px; font-size: 50px; font-weight: bold")
+        nextButton.setIcon(QIcon("img/arrow-right.png"))
+        nextButton.setIconSize(QPixmap("img/arrow-right.png").size())
         nextButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         nextButton.move(700, 581)
+        nextButton.clicked.connect(self.nextEx)
 
-        prevButton = QPushButton("<", self)
+        prevButton = QPushButton(self)
         prevButton.setGeometry(200, 150, 100, 100)
-        prevButton.resize(93, 89)
-        prevButton.setStyleSheet("background-color: #5A8D6C; color: #EEEEE2; border-radius: 25px; border: 2px; font-size: 50px; font-weight: bold")
+        prevButton.setIcon(QIcon("img/arrow-left.png"))
+        prevButton.setIconSize(QPixmap("img/arrow-left.png").size())
         prevButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         prevButton.move(513, 581)
+        prevButton.clicked.connect(self.prevEx)
 
-        # self.label = QLabel()
+    def prevEx(self):
+        # self.movie.stop()
+        self.movie = QMovie("img/exe-bicycle.gif")
+        self.currEx.setMovie(self.movie)
+        self.movie.start()
+        self.movie.setScaledSize(QSize(330, 305))
+        self.movie.setSpeed(60)
 
+    def nextEx(self):
+        # self.movie.stop()
+        self.movie = QMovie("img/exe-pushup.gif")
+        self.currEx.setMovie(self.movie)
+        self.movie.start()
+        self.movie.setScaledSize(QSize(330, 305))
+        self.movie.setSpeed(100)
+    
 if __name__ == "__main__":
     
     app = QApplication(sys.argv)
