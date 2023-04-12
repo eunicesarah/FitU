@@ -5,9 +5,8 @@ from functools import partial
 
 from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtGui import QIcon, QPixmap, QCursor, QFont, QMovie
-from PyQt6.QtWidgets import (QWidget, QApplication, QMainWindow, QWidget, QGridLayout,
-                             QGroupBox, QRadioButton, QCheckBox, QMessageBox,
-                             QLabel, QLineEdit, QVBoxLayout, QHBoxLayout, QPushButton, QScrollArea, QDialog)
+from PyQt6.QtWidgets import (QWidget, QApplication, QWidget,
+                             QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QScrollArea, QDialog)
 # from PyQt6 import QtWidgets
 
 background = '#5A8D6C'
@@ -209,25 +208,35 @@ class listLatihan2(QWidget):
                     
                     title = QLabel(card)
                     title.setText(f'<font style="font-size:24px;font-family="Sogoe UI;" ><b>{self.listLat[count][1]}<b>')
+                    title.setStyleSheet("color: #174728")
                     title.move(10, 120)
                     
                     repDur = QLabel(card)
                     if(count<8):
                         repDur.setText(f'<font style="font-size:14px;font-family="Sogoe UI;"><b>{self.listLat[count][4]} Detik<b>')
+                        repDur.setStyleSheet("color: #174728")
                         repDur.move(203, 130)
                     else:
                         repDur.setText(f'<font style="font-size:14px;font-family="Sogoe UI;"><b>{self.listLat[count][5]} Repetisi<b>')
+                        repDur.setStyleSheet("color: #174728")
                         repDur.move(187,130)
                         
                     desc = QLabel(card)
                     t = f'<font style="font-size:12px;font-family="Sogoe UI;">{self.listLat[count][2]}'
+                    if(len(t)> 200):
+                        t = t[0:200]+f" <font color='blue';>See More..."
+                    
                     desc.setText(t)
                     desc.move(10, 170)
                     desc.setWordWrap(True)
                     desc.setFixedWidth(245)
+                    desc.setFixedHeight(70)
+                    desc.setAlignment(Qt.AlignmentFlag.AlignJustify)
+                    desc.setStyleSheet("color: #174728")
                     self.count = count
                     hbox.addWidget(card)
                     card.clicked.connect(partial(self.openDetail, self.count, self.listLat))
+                    card.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
                     count+=1
             else:
                 box = QLabel()
@@ -260,7 +269,7 @@ class MyPopup(QDialog):
         bg = QLabel(self)
         bg.setFixedSize(942, 464)
         bg.move(198, 164)
-        bg.setStyleSheet("background-color: black; border-radius: 20px;")
+        bg.setStyleSheet("background-color: black; border-radius: 20px; color: #174728;")
         
         label = QLabel(bg)
         label.setFixedSize(938,460)
@@ -272,16 +281,18 @@ class MyPopup(QDialog):
         okButton.setText("OK")
         okButton.setFixedSize(70, 40)
         okButton.move(840, 395)
-        okButton.setStyleSheet(styleSheet)
+        okButton.setStyleSheet("color: #D2DCC4; background-color: #174728;font-weight: bold; font-size: 15px;")
+        okButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         okButton.clicked.connect(self.close)
         
         
         pathGif = QMovie(listLat[count][6])
         pathGif.setScaledSize(QSize(325,325))
-        pathGif.setSpeed(1000)
+        pathGif.setSpeed(100)
         gif = QLabel(bg)
         gif.setMovie(pathGif)
-        gif.move(20,50)
+        gif.move(40,60)
+        gif.setStyleSheet("background-color: #D2DCC4;")
         pathGif.start()
         
         garis = QLabel(bg)
@@ -290,26 +301,32 @@ class MyPopup(QDialog):
         garis.move(400,10)
         
         title = QLabel(bg)
-        title.setText(f'<font style="font-size:28px;font-family="Sogoe UI; ><b>{listLat[count][1]}<b>')
+        title.setText(f'<font style="font-size:60px;font-family="Sogoe UI; ><b>{listLat[count][1]}<b>')
         title.setStyleSheet("color: #174728; background-color: #D2DCC4;")
-        title.move(420, 50)
+        title.move(420, 40)
         
-        # goal = QLabel(bg)
-        # goal.setText(f'<font style="font-size:28px;font-family="Sogoe UI; ><b>{listLat[count][3]}<b>')
-        # goal.setStyleSheet("color: #174728; background-color: #D2DCC4;")
-        # goal.move(10, 150)
+        goal = QLabel(bg)
+        goal.setText(f'<font style="font-size:26px;font-family="Sogoe UI; ><b>{listLat[count][3]}<b>')
+        goal.setStyleSheet("color: #174728; background-color: #D2DCC4;")
+        goal.move(420, 130)
         
-        # ex_id = QLabel(bg)
-        # ex_id.setText(f'<font style="font-size:28px;font-family="Sogoe UI; ><b>{listLat[count][0]}<b>')
-        # ex_id.setStyleSheet("color: #174728; background-color: #D2DCC4;")
-        # ex_id.move(10, 200)
+        repDur = QLabel(bg)
+        if(count<8):
+            repDur.setText(f'<font style="font-size:17px;font-family="Sogoe UI;"><b>{listLat[count][4]} Detik<b>')
+            repDur.move(760, 140)
+        else:
+            repDur.setText(f'<font style="font-size:17px;font-family="Sogoe UI;"><b>{listLat[count][5]} Repetisi<b>')
+            repDur.move(740, 140)
+        repDur.setStyleSheet("color: #174728; background-color: #D2DCC4;")
         
-        # desc = QLabel(bg)
-        # desc.setText(f'<font style="font-size:14px;font-family="Sogoe UI; ><b>{listLat[count][2]}<b>')
-        # desc.setStyleSheet("color: #174728; background-color: #D2DCC4;")
-        # desc.move(10, 250)
-        # desc.setWordWrap(True)
-        # desc.setFixedWidth(380)
+        
+        desc = QLabel(bg)
+        desc.setText(f'<font style="font-size:14px;font-family="Sogoe UI; ><b>{listLat[count][2]}<b>')
+        desc.setStyleSheet("color: #174728; background-color: #D2DCC4;")
+        desc.setAlignment(Qt.AlignmentFlag.AlignJustify)
+        desc.move(420, 180)
+        desc.setWordWrap(True)
+        desc.setFixedWidth(410)
         
         
 
