@@ -3,21 +3,25 @@ from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QLineEdit, QPushButto
 from PyQt6.QtGui import QFont, QPixmap, QCursor, QMovie, QIcon
 from PyQt6.QtCore import Qt, QSize
 import sys
+conn = sqlite3.connect("fitu.db")
+c = conn.cursor()
+latihan = c.execute("SELECT gif FROM daftar_latihan NATURAL JOIN latihan_program WHERE program_id = 1").fetchall()
+print(latihan)
 class plan(QWidget):
-
     def __init__(self):
         super().__init__()
+        self.index = 0
         self.setUpWindowPlan()
         
-
         # self.setUpRegisterWindow()
-        # self.conn = sqlite3.connect("fitu.db")
     def setUpWindowPlan(self):
         self.setWindowTitle("FitU - Plan")
         self.setFixedSize(1280, 720)
         self.setUpPlan()
 
     def setUpPlan(self):
+        
+
         self.setStyleSheet('background-color: #5A8D6C')
 
         backButton = QPushButton("<", self)
@@ -31,10 +35,11 @@ class plan(QWidget):
         self.currEx.setFixedSize(360, 335)
         self.currEx.move(460, 105)
         self.currEx.setStyleSheet("background-color: #EEEEE2; border-radius: 25px; border: 2px")
-        self.movie = QMovie("img/exercise-unscreen.gif")
+        self.movie = QMovie(latihan[0][0])
         self.currEx.setMovie(self.movie)
         self.movie.start()
-        self.movie.setScaledSize(QSize(330, 305))
+        # self.movie.setScaledSize(QSize(330, 305))
+        self.currEx.setScaledContents(True)
         self.movie.setSpeed(60)
 
         nextButton = QPushButton(self)
@@ -53,21 +58,28 @@ class plan(QWidget):
         prevButton.move(513, 581)
         prevButton.clicked.connect(self.prevEx)
 
+
+
     def prevEx(self):
-        # self.movie.stop()
-        self.movie = QMovie("img/exe-bicycle.gif")
-        self.currEx.setMovie(self.movie)
-        self.movie.start()
-        self.movie.setScaledSize(QSize(330, 305))
-        self.movie.setSpeed(60)
+        if self.index > 0:
+            self.index -= 1
+            self.movie = QMovie(latihan[self.index][0])
+            self.currEx.setMovie(self.movie)
+            self.movie.start()
+            self.movie.setScaledSize(QSize(330, 305))
+            self.movie.setSpeed(60)
+            print("kiri:" + str(self.index))
+
 
     def nextEx(self):
-        # self.movie.stop()
-        self.movie = QMovie("img/exe-pushup.gif")
-        self.currEx.setMovie(self.movie)
-        self.movie.start()
-        self.movie.setScaledSize(QSize(330, 305))
-        self.movie.setSpeed(100)
+        if self.index < (len(latihan)/2) - 1:
+            self.index += 1
+            self.movie = QMovie(latihan[self.index][0])
+            self.currEx.setMovie(self.movie)
+            self.movie.start()
+            self.movie.setScaledSize(QSize(330, 305))
+            self.movie.setSpeed(100)
+            print("kanan:" + str(self.index))
     
 if __name__ == "__main__":
     
