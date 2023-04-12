@@ -3,7 +3,7 @@ import sys
 import textwrap
 from functools import partial
 
-from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtCore import Qt, QSize, pyqtSignal
 from PyQt6.QtGui import QIcon, QPixmap, QCursor, QFont, QMovie
 from PyQt6.QtWidgets import (QWidget, QApplication, QWidget,
                              QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QScrollArea, QDialog)
@@ -21,8 +21,8 @@ titleLat = None
 class listLatihan2(QWidget):
     
     
+    switch = pyqtSignal(str, dict)
     def __init__(self):
-        
         super().__init__()    
         self.con = sqlite3.connect('fitu.db')
         self.listLat = self.fetchListLatihan()  

@@ -1,6 +1,6 @@
 import sys
 
-from PyQt6.QtCore import Qt, pyqtSignal, QSize
+from PyQt6.QtCore import Qt, pyqtSignal, QSize, pyqtSignal
 from PyQt6.QtGui import QCursor, QFont, QPixmap, QMovie
 from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QWidget, QScrollArea, QVBoxLayout, QHBoxLayout
 import sqlite3
@@ -53,7 +53,7 @@ styleSheetCard = (
 
 
 class dashboard(QWidget):
-    switch_window = pyqtSignal(str, dict)
+    switch = pyqtSignal(str, dict)
     def __init__(self, user=None):
         super().__init__()
         if (user == None):
@@ -268,6 +268,7 @@ class dashboard(QWidget):
         customizeButton.move(649, 58)
         customizeButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
+        customizeButton.clicked.connect(self.customWindow)
         
         # tombol plan
         planButton = QPushButton(self)
@@ -301,6 +302,7 @@ class dashboard(QWidget):
         listButton.move(898, 58)
         listButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
+        listButton.clicked.connect(self.listWindow)
         
         
         # tombol history
@@ -355,6 +357,7 @@ class dashboard(QWidget):
         start.setFixedSize(233, 47) #pake ini buat kalau dia buletan
         start.move(101, 511)    
         start.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        start.clicked.connect(self.planWindow)
 
         # membuat history card
         historyDate = cur.execute("""
@@ -476,11 +479,13 @@ class dashboard(QWidget):
             self.historyElement(historyDate, self.index_history+1)
     
     def planWindow(self):
-        self.label = QLabel("")
-        self.label.setParent(self)
-        # self.window = plan(self.user)
-        # self.window.show()
-        # self.close()
+        self.switch.emit("plan", {})
+    
+    def listWindow(self):
+        self.switch.emit("listLatihan", {})
+    
+    def customWindow(self):
+        self.switch.emit("customize", {})
     
     def boxdelete(self, box):
         for i in range(self.vlayout.count()):

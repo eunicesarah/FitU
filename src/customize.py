@@ -1,7 +1,7 @@
 import sqlite3
 import sys
 
-from PyQt6.QtCore import Qt, QSize, QPropertyAnimation, QAbstractAnimation, QEasingCurve, QAnimationGroup
+from PyQt6.QtCore import Qt, QSize, QPropertyAnimation, QAbstractAnimation, QEasingCurve, QAnimationGroup, pyqtSignal
 from PyQt6.QtGui import QIcon, QPixmap, QCursor, QFont, QMovie
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QGridLayout,
                              QGroupBox, QRadioButton, QCheckBox, QMessageBox,
@@ -13,8 +13,8 @@ text_color = '#EEEEE2'
 cardColor = '#D2DCC4'
 
 class customizeWorkout(QWidget):
-    
-    
+    switch = pyqtSignal(str, dict)
+
     def __init__(self):
         
         super().__init__()
@@ -435,6 +435,7 @@ class customizeWorkout(QWidget):
         saveButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))       
         saveButton.clicked.connect(saveButtonClicked)
+    
                 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
