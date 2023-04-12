@@ -1,12 +1,13 @@
 import sqlite3
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QLineEdit, QPushButton, QRadioButton, QCheckBox, QMessageBox
 from PyQt6.QtGui import QFont, QPixmap, QCursor
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 import sys
 class register(QWidget):
-
+    switch = pyqtSignal()
     def __init__(self):
         super().__init__()
+        self.conn = sqlite3.connect('fitu.db')
         self.setUpWindow()
         
 
@@ -107,14 +108,21 @@ class register(QWidget):
         self.registerButton.setText("Register")
         self.registerButton.setFixedSize(172, 44)
         self.registerButton.setStyleSheet('''
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        border-radius: 20px;
-        color: rgba(23, 71, 40, 1);
-        background-color: #D2DCC4
+        QPushButton {
+            color: rgba(23, 71, 40, 1);
+            background-color:  #D2DCC4;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+        }
+        QPushButton:hover {
+            background-color: #5A8D6C;
+        }
         ''')
         self.registerButton.move(873, 545)
         self.registerButton.setFont(registerText)
         self.registerButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.registerButton.clicked.connect(self.register)
+
 
         self.fit = QCheckBox(self)
         self.fit.move(781, 486)
@@ -131,7 +139,7 @@ class register(QWidget):
         self.thin.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
     def register(self):
-        if (self.nameInput == '' or self.age == '' or self.height == '' or self.weight == '' or (not self.male and not self.female) or self.fit or self.thin):
+        if (self.nameInput == '' or self.age == '' or self.height == '' or self.weight == '' or (not self.male and not self.female) or self.fit == '' or self.thin == ''):
             msgBox = QMessageBox()
             msgBox.setText("<p>Please fill out the form properly!</p>")
             msgBox.setWindowTitle("Registration Failed")
@@ -139,43 +147,66 @@ class register(QWidget):
             msgBox.setStyleSheet("background-color: white")
             msgBox.setStandardButtons(QMessageBox.StandardButton.Ok)
             msgBox.exec()
-        c = self.conn.cursor()
-        if (self.female):
-            if (self.thin):
-                c.execute(
-                    f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'thin', 'female', '{self.age.text()}')"
-                )
-                self.conn.commit()
-            elif (self.fit):
-                c.execute(
-                    f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit', 'female', '{self.age.text()}')"
-                )
-                self.conn.commit()
+            return
+        else:
+            c = self.conn.cursor()
+            if (self.female.isChecked()):
+                print("female")
+                if (self.fit.isChecked() == self.thin.isChecked()):
+                    print("both")
+                    c.execute(
+                        f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit, thin', 'female', '{self.age.text()}')"
+                    )
+                    self.conn.commit()
+                elif (self.thin.isChecked()):
+                    c.execute(
+                        f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'thin', 'female', '{self.age.text()}')"
+                    )
+                    print("thin")
+                    self.conn.commit()
+                elif (self.fit.isChecked()):
+                    print("fit")
+                    c.execute(
+                        f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit', 'female', '{self.age.text()}')"
+                    )
+                    self.conn.commit()
+                # if (self.fit and self.thin):
+                
 
-            else:
-                c.execute(
-                    f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit, thin', 'female', '{self.age.text()}')"
-                )
-                self.conn.commit()
 
-        if (self.male):
-            if (self.thin):
-                c.execute(
-                    f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'thin', 'male', '{self.age.text()}')"
-                )
-                self.conn.commit()
+            elif(self.male.isChecked()):
+                print("male")
+                if(self.fit.isChecked() and self.thin.isChecked()):
+                    print("both")
+                    c.execute(
+                        f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit, thin', 'male', '{self.age.text()}')"
+                    )
+                    self.conn.commit()
+                elif (self.thin.isChecked()):
+                    print("thin")
+                    c.execute(
+                        f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'thin', 'male', '{self.age.text()}')"
+                    )
+                    self.conn.commit()
 
-            elif (self.fit):
-                c.execute(
-                    f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit', 'male', '{self.age.text()}')"
-                )
-                self.conn.commit()
+                elif (self.fit.isChecked()):
+                    print("fit")
+                    c.execute(
+                        f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit', 'male', '{self.age.text()}')"
+                    )
+                    self.conn.commit()
+                # if (self.fit and self.thin):
 
-            else:
-                c.execute(
-                    f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit, thin', 'male', '{self.age.text()}')"
-                )
-                self.conn.commit()
+                
+            self.nameInput.clear()
+            self.age.clear()
+            self.height.clear()
+            self.weight.clear()
+            self.switch.emit()
+    
+    # def showDashboard(self):
+    #     self.switch.emit("dashboard", {})
+
                     
 if __name__ == "__main__":
     
