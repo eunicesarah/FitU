@@ -88,11 +88,41 @@ def tesBaca():
                 INSERT or IGNORE INTO latihan_program
                     (program_id, exercise_id)
                 VALUES
-                    (1, 201),
-                    (1, 202),
+                    (1, 104),
+                    (1, 106),
                     (1, 205),
                     (1, 206)
                 """)
+    cur.execute("""
+            INSERT INTO riwayat_latihan
+                (program_id, name, title_program, calories, date, tot_duration)
+            VALUES
+                (1, 'Push Up', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Sit Up', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Pull Up', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Squat Jump', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Lunges', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Crunches', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Burpees', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Bicycle Crunch', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Jumping Rope', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Running', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Jumping Jacks', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Plank', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Bridge', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'High Knees', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Squat', 'Chest Day', 100, '2020-12-12', 30),
+                (2, 'Push Up', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Sit Up', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Pull Up', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Squat Jump', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Lunges', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Crunches', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Burpees', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Bicycle Crunch', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Jumping Rope', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Running', 'Leg Day', 100, '2020-12-15', 30)
+            """)
 
     con.commit()
     con.close()
