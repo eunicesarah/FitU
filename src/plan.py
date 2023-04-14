@@ -3,7 +3,7 @@ import sys
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap, QCursor, QFont
-from PyQt6.QtWidgets import (QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QScrollArea)
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QScrollArea
 
 # COLORS PALLETE
 BACKGROUNDCOLOR = '#5A8D6C'
@@ -38,6 +38,7 @@ class plan(QWidget):
         buttonFont = QFont()
         buttonFont.setFamily('Segoe UI')
         buttonFont.setPointSize(18)
+        buttonFont.setBold(True)
 
         # Style sheets
         styleSheetNavbar0 = (f'''
@@ -46,6 +47,9 @@ class plan(QWidget):
                 background-color: {BACKGROUNDCOLOR};
                 border: none;
                 border-radius: 20px;
+            }}
+            QPushButton:hover {{
+                color: {BUTTONCOLOR};
             }}
         ''')
 
@@ -58,46 +62,55 @@ class plan(QWidget):
             }}
         ''')
 
+        styleSheetSmallCard = (
+            '''
+            QPushButton {
+                background-color:  #5A8D6C;
+                border: 1.2px solid rgba(255, 255, 255, 0.8);
+                border-radius: 20px;
+            }
+            QPushButton:hover {
+                background-color: #174728;
+                border: 1.2px solid rgba(255, 255, 255, 0.8);
+            }
+            '''
+        )
+
         styleSheetBigCard = (
             "background-color: #D2DCC4;"
             "border-radius: 20px;"
         )
 
-        styleSheetSmallCard = (
+        styleSheet = (
             "color: #5A8D6C;"
             "background-color: #D2DCC4;"
             "border-radius: 20px;"
         )
-
-        styleSheet2 = (
-            "color: #5A8D6C;"
-            "background-color: #D2DCC4;"
-            "border-radius: 20px;"
-        )
-        styleSheet4 = (
-            "color: #EEEEE2;"
-            "background-color: #174728;"
-            "border-radius: 20px;"
+        styleSheetStart = (
         f'''
             QPushButton {{
                 color: {TEXTCOLOR};
                 background-color: {BACKGROUNDCOLOR};
-                border: none;
+                border: 1.2px solid rgba(255, 255, 255, 0.8);
                 border-radius: 20px;
             }}
+            QPushButton:hover {{
+                background-color: {BUTTONCOLOR};
+            }}
         ''')
-
-        styleSheetCard = (
-            "background-color: #5A8D6C;"
-            "border-radius: 20px;"
-        )
         
-        styleSheet6 = (f'''
+        styleSheetCutomize = (f'''
+            QPushButton {{
             background-color: {CARDCOLOR};
             color: {BUTTONCOLOR};
             border: none;
             border-radius: 20px;
             text-decoration: underline;
+            }}
+            QPushButton:hover {{
+            background-color: {CARDCOLOR};
+            color: {BACKGROUNDCOLOR};
+            }}
         ''')
 
         verticallScrollBarStyle = (""" 
@@ -162,8 +175,7 @@ class plan(QWidget):
         homeButton.setFont(buttonFont)
         homeButton.setFixedSize(96, 42)
         homeButton.move(507, 53)    
-        homeButton.setCursor(
-            QCursor(Qt.CursorShape.PointingHandCursor))
+        homeButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         
         # Customize Button
         customizeButton = QPushButton(self)
@@ -171,8 +183,7 @@ class plan(QWidget):
         customizeButton.setStyleSheet(styleSheetNavbar0)
         customizeButton.setFont(buttonFont)
         customizeButton.move(649, 58)
-        customizeButton.setCursor(
-            QCursor(Qt.CursorShape.PointingHandCursor))
+        customizeButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         
         # Plan Button
         planButton = QPushButton(self)
@@ -188,8 +199,7 @@ class plan(QWidget):
         listButton.setStyleSheet(styleSheetNavbar0)
         listButton.setFont(buttonFont)
         listButton.move(898, 58)
-        listButton.setCursor(
-            QCursor(Qt.CursorShape.PointingHandCursor))
+        listButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         # History Button
         historyButton = QPushButton(self)
@@ -197,8 +207,7 @@ class plan(QWidget):
         historyButton.setStyleSheet(styleSheetNavbar0)
         historyButton.setFont(buttonFont)
         historyButton.move(979, 58)
-        historyButton.setCursor(
-            QCursor(Qt.CursorShape.PointingHandCursor))   
+        historyButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))   
 
         # Profile Picture
         profilePicture = QLabel(self)
@@ -233,15 +242,13 @@ class plan(QWidget):
             exButton = QPushButton(self)
             exButton.setStyleSheet(styleSheetSmallCard)
             exButton.setFixedSize(366, 99)
-            exButton.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
             exButton.setFont(buttonFont)
-            exButton.setCursor(
-                QCursor(Qt.CursorShape.PointingHandCursor))
+            exButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             exButton.clicked.connect(lambda state, index=i: showExercise(index))
             title = QLabel(exButton)
             title.setText(f'<font style="font-size:24px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{data[i][1]}<b>')
             title.move(20, 15)
-            dur = QLabel(exButton)
+            title.setStyleSheet("background-color: transparent;")
 
             con = sqlite3.connect('fitu.db')
             c = con.cursor()
@@ -250,8 +257,10 @@ class plan(QWidget):
             c.close()
 
             predict = len(data2)
+            dur = QLabel(exButton)
             dur.setText(f'<font style="font-size:18px;" color="#D2DCC4"; font-family="Sogoe UI";>{predict} Minutes')
             dur.move(20, 50)
+            dur.setStyleSheet("background-color: transparent;")
             scrollLayout.addWidget(exButton)  
         scroll.setWidget(scrollWidget)
         
@@ -276,49 +285,49 @@ class plan(QWidget):
 
         # create a function to show exercise data based on index
         def showExercise(index):
-                clickedRowData = data[index][0]
-                con = sqlite3.connect('fitu.db')
-                c = con.cursor()
-                c.execute("SELECT title, repetition, duration, gif FROM latihan_program, daftar_latihan WHERE latihan_program.exercise_id = daftar_latihan.exercise_id AND latihan_program.program_id = ?", (clickedRowData,))
-                data2 = c.fetchall()
-                c.close()
+            clickedRowData = data[index][0]
+            con = sqlite3.connect('fitu.db')
+            c = con.cursor()
+            c.execute("SELECT title, repetition, duration, gif FROM latihan_program, daftar_latihan WHERE latihan_program.exercise_id = daftar_latihan.exercise_id AND latihan_program.program_id = ?", (clickedRowData,))
+            data2 = c.fetchall()
+            c.close()
 
-                # clear the exercise data list
-                exercise_data.clear()
+            # clear the exercise data list
+            exercise_data.clear()
 
-                # append new exercise data to the list
-                for i in range(len(data2)):
-                    exercise_data.append(data2[i])
+            # append new exercise data to the list
+            for i in range(len(data2)):
+                exercise_data.append(data2[i])
 
-                # remove all widgets from scrollLayout2
-                for i in reversed(range(scrollLayout2.count())):
-                    scrollLayout2.itemAt(i).widget().setParent(None)
+            # remove all widgets from scrollLayout2
+            for i in reversed(range(scrollLayout2.count())):
+                scrollLayout2.itemAt(i).widget().setParent(None)
 
-                # create QLabel widgets for each exercise and add them to scrollLayout2
-                for i in range(len(exercise_data)):
-                    exLabel = QLabel(self)
-                    exLabel.setFixedSize(202, 270)
-                    exLabel.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
-                    title = QLabel(exLabel)
-                    title.setText(f'<font style="font-size:24px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{exercise_data[i][0]}<b>')
-                    title.move(20, 15)
-                    repDur = QLabel(exLabel)
-                    if exercise_data[i][1] == None:
-                        repDur.setText(f'<font style="font-size:18px;" color="#D2DCC4"; font-family="Sogoe UI";>{exercise_data[i][2]} Minutes')
-                    else:
-                        repDur.setText(f'<font style="font-size:18px;" color="#D2DCC4"; font-family="Sogoe UI";>{exercise_data[i][1]} Repetitions')
-                    repDur.move(20, 50)
-                    exPix = QPixmap(exercise_data[i][3])
-                    image = QLabel(exLabel)
-                    image.setPixmap(exPix)
-                    image.setScaledContents(True)
-                    image.move(20, 80)
-                    image.setFixedSize(160, 160)
+            # create QLabel widgets for each exercise and add them to scrollLayout2
+            for i in range(len(exercise_data)):
+                exLabel = QLabel(self)
+                exLabel.setFixedSize(202, 270)
+                exLabel.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
+                title = QLabel(exLabel)
+                title.setText(f'<font style="font-size:22px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{exercise_data[i][0]}<b>')
+                title.move(20, 15)
+                repDur = QLabel(exLabel)
+                if exercise_data[i][1] == None:
+                    repDur.setText(f'<font style="font-size:18px;" color="#D2DCC4"; font-family="Sogoe UI";>{exercise_data[i][2]} Minutes')
+                else:
+                    repDur.setText(f'<font style="font-size:18px;" color="#D2DCC4"; font-family="Sogoe UI";>{exercise_data[i][1]} Repetitions')
+                repDur.move(20, 50)
+                exPix = QPixmap(exercise_data[i][3])
+                image = QLabel(exLabel)
+                image.setPixmap(exPix)
+                image.setScaledContents(True)
+                image.move(20, 80)
+                image.setFixedSize(160, 160)
 
-                    scrollLayout2.addWidget(exLabel)
+                scrollLayout2.addWidget(exLabel)
 
-                # set the widget of scroll2 to scrollWidget2 to update the view
-                scroll2.setWidget(scrollWidget2)
+            # set the widget of scroll2 to scrollWidget2 to update the view
+            scroll2.setWidget(scrollWidget2)
             
         font = QFont()
         font.setFamily("Segoe UI")
@@ -334,13 +343,13 @@ class plan(QWidget):
         exText = QLabel(self)
         exText.setText("Workout Plan")
         exText.setFont(font)
-        exText.setStyleSheet(styleSheet2)
+        exText.setStyleSheet(styleSheet)
         exText.setFixedSize(250, 50)
         exText.move(140,185)
         
         progText = QLabel(self)
         progText.setText("Exercise")
-        progText.setStyleSheet(styleSheet2)
+        progText.setStyleSheet(styleSheet)
         progText.setFixedSize(165, 50)
         progText.setFont(font)
         progText.move(599, 182)
@@ -351,21 +360,17 @@ class plan(QWidget):
         startButton.setText("START >")
         startButton.move(1004, 620)
         startButton.setFixedSize(144, 42)
-        startButton.setStyleSheet(styleSheet4)
+        startButton.setStyleSheet(styleSheetStart)
         startButton.setFont(font1)
-        startButton.setCursor(
-            QCursor(Qt.CursorShape.PointingHandCursor))
+        startButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         custButton = QPushButton(self)
         custButton.setFont(font)
         custButton.setText("Customize")
         custButton.move(825, 620)
-        custButton.setStyleSheet(styleSheet6)
+        custButton.setStyleSheet(styleSheetCutomize)
         custButton.setFont(font1)
-        custButton.setCursor(
-            QCursor(Qt.CursorShape.PointingHandCursor))
-
-            
+        custButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
