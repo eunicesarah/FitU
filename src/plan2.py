@@ -52,10 +52,12 @@ class plan(QWidget):
     def setUpPlan(self):
         self.setStyleSheet('background-color: #5A8D6C')
 
-        backButton = QPushButton("<", self)
+        backButton = QPushButton(self)
         backButton.setGeometry(200, 150, 100, 100)
-        backButton.resize(50, 50)
-        backButton.setStyleSheet("background-color: #174728; color: #EEEEE2; border-radius: 25px; border: 2px; font-size: 23px; font-weight: bold")
+        backButton.resize(60, 60)
+        backButton.setIcon(QIcon("img/arrow-left.png"))
+        backButton.setIconSize(QPixmap("img/arrow-left.png").size())
+        backButton.setStyleSheet("background-color: #174728; color: #EEEEE2; border-radius: 30px; border: 2px;")
         backButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         backButton.move(50, 64)
 
@@ -70,18 +72,44 @@ class plan(QWidget):
         self.currEx.setScaledContents(True)
         self.movie.setSpeed(60)
 
+        # nextLabel = QLabel(self)
+        # nextLabel.setFixedSize(360, 335)
+        # nextLabel.move(460, 105)
+        # nextLabel.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
+
+        # prevLabel = QLabel(self)
+        # prevLabel.setFixedSize(360, 335)
+        # prevLabel.move(513, 581)
+        # prevLabel.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
+
         nextButton = QPushButton(self)
         nextButton.setGeometry(200, 150, 100, 100)
         nextButton.setIcon(QIcon("img/arrow-right.png"))
         nextButton.setIconSize(QPixmap("img/arrow-right.png").size())
         nextButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        nextButton.setStyleSheet('''
+        QPushButton{
+            border: 5px #5A8D6C;
+            } 
+        QPushButton:hover {
+            background-color: #174728;
+        }''')
         nextButton.move(700, 581)
         nextButton.clicked.connect(self.nextEx)
 
         prevButton = QPushButton(self)
         prevButton.setGeometry(200, 150, 100, 100)
+        # prevButton.setStyleSheet("background-image: url(img/arrow-left.png)")
         prevButton.setIcon(QIcon("img/arrow-left.png"))
         prevButton.setIconSize(QPixmap("img/arrow-left.png").size())
+        # print("size: "+ str(QPixmap("img/arrow-left.png").size()))
+        prevButton.setStyleSheet('''
+        QPushButton{
+            border: 5px #5A8D6C;
+            } 
+        QPushButton:hover {
+            background-color: #174728;
+        }''')
         prevButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         prevButton.move(513, 581)
         prevButton.clicked.connect(self.prevEx)
