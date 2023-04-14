@@ -115,6 +115,7 @@ class register(QWidget):
             border-radius: 20px;
         }
         QPushButton:hover {
+            color: #D2DCC4;
             background-color: #5A8D6C;
         }
         ''')
@@ -195,6 +196,8 @@ class register(QWidget):
                         f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit', 'male', '{self.age.text()}')"
                     )
                     self.conn.commit()
+                # if (self.fit and self.thin):
+
                 
             self.nameInput.clear()
             self.age.clear()
