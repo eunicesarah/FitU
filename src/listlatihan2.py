@@ -14,10 +14,6 @@ button_color = '#174728'
 text_color = '#EEEEE2'
 card_color = '#D2DCC4'
 
-imgPath = None
-descLat = None
-titleLat = None
-
 class listLatihan2(QWidget):
     
     
@@ -75,29 +71,38 @@ class listLatihan2(QWidget):
             background-color: {background};
             border: none;
             border-radius: 20px;
+            font-weight: bold;
+        }}
+        QPushButton:hover {{
+            color: {button_color};
         }}
         ''') 
         homeButton.setFont(buttonFont)
-        homeButton.setFixedSize(96, 42) #pake ini buat kalau dia buletan
-        homeButton.move(507, 58)    
+        homeButton.move(670, 58)   
         homeButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
+        homeButton.clicked.connect(self.dashboard)
         
         # tombol customize
         customizeButton = QPushButton(self)
-        customizeButton.setText('Customize')
+        customizeButton.setText('Customize') 
         customizeButton.setStyleSheet(f'''
         QPushButton {{
             color: {text_color};
             background-color: {background};
             border: none;
             border-radius: 20px;
+            font-weight: bold;
+        }}
+        QPushButton:hover {{
+            color: {button_color};
         }}
         ''')
         customizeButton.setFont(buttonFont)
-        customizeButton.move(649, 58)
+        customizeButton.move(798, 58)
         customizeButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
+        customizeButton.clicked.connect(self.customWindow)
         
         # tombol plan
         planButton = QPushButton(self)
@@ -108,50 +113,64 @@ class listLatihan2(QWidget):
             background-color: {background};
             border: none;
             border-radius: 20px;
+            font-weight: bold;
         }}
+        QPushButton:hover {{
+            color: {button_color};
+        }}
+
         ''')
         planButton.setFont(buttonFont)
-        planButton.move(807, 58)
+        planButton.move(956, 58)
         planButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
+        planButton.clicked.connect(self.planWindow)
 
         # tombol list
         listButton = QPushButton(self)
         listButton.setText('List')
-        listButton.setFixedSize(96, 42)
         listButton.setStyleSheet(f'''
         QPushButton {{
             color: {text_color};
             background-color: {button_color};
             border: none;
             border-radius: 20px;
+            font-weight: bold;
         }}
         ''')
         listButton.setFont(buttonFont)
-        listButton.move(870, 53)
+        listButton.setFixedSize(96, 42)
+        listButton.move(1025, 53)
         listButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
+        listButton.clicked.connect(self.listWindow)
         
-        # tombol history
-        historyButton = QPushButton(self)
-        historyButton.setText('History')
-        historyButton.setStyleSheet(f'''
-        QPushButton {{
-            color: {text_color};
-            background-color: {background};
-            border: none;
-            border-radius: 20px;
-        }}
-        ''')
-        historyButton.setFont(buttonFont)
-        historyButton.move(979, 58)
-        historyButton.setCursor(
-            QCursor(Qt.CursorShape.PointingHandCursor))
+        
+        # # tombol history
+        # historyButton = QPushButton(self)
+        # historyButton.setText('History')
+        # historyButton.setStyleSheet(f'''
+        # QPushButton {{
+        #     color: {text_color};
+        #     background-color: {background};
+        #     border: none;
+        #     border-radius: 20px;
+        #     font-weight: bold;
+        # }}
+        # QPushButton:hover {{
+        #     color: {button_color};
+        # }}
+        # ''')
+        # historyButton.setFont(buttonFont)
+        # historyButton.move(979, 58)
+        # historyButton.setCursor(
+        #     QCursor(Qt.CursorShape.PointingHandCursor))
         
         # foto profil
         profilePhoto = QLabel(self)
         profilePhoto.setPixmap(QPixmap('img/profile-dashboard.png'))
         profilePhoto.move(1133, 45)
+        
         #Membuat scroll area
         
        
@@ -224,7 +243,7 @@ class listLatihan2(QWidget):
                     desc = QLabel(card)
                     t = f'<font style="font-size:12px;font-family="Sogoe UI;">{self.listLat[count][2]}'
                     if(len(t)> 200):
-                        t = t[0:200]+f" <font color='blue';>See More..."
+                        t = t[0:200]+f" <font color='#174728';;><b>See More...<b>"
                     
                     desc.setText(t)
                     desc.move(10, 170)
@@ -248,6 +267,17 @@ class listLatihan2(QWidget):
             
         
         scroll.setWidget(scrollWidget)
+    def customWindow(self):
+        self.switch.emit("customize", {})
+        
+    def planWindow(self):
+        self.switch.emit("plan", {})
+    
+    def listWindow(self):
+        self.switch.emit("listLatihan", {})
+        
+    def dashboard(self):
+        self.switch.emit("dashboard", {})
         
 class MyPopup(QDialog):
     def __init__(self, count, listLat):
@@ -327,6 +357,8 @@ class MyPopup(QDialog):
         desc.move(420, 180)
         desc.setWordWrap(True)
         desc.setFixedWidth(410)
+    
+    
         
         
 
