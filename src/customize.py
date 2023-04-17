@@ -13,7 +13,7 @@ text_color = '#EEEEE2'
 cardColor = '#D2DCC4'
 
 class customizeWorkout(QWidget):
-    switch = pyqtSignal(str, dict)
+    switch = pyqtSignal(str, int, dict)
 
     def __init__(self):
         
@@ -141,6 +141,7 @@ class customizeWorkout(QWidget):
         homeButton.move(507, 53)    
         homeButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
+        homeButton.clicked.connect(self.dashboardWindow)
         
         # tombol customize
         customizeButton = QPushButton(self)
@@ -158,6 +159,7 @@ class customizeWorkout(QWidget):
         customizeButton.move(649, 53)     
         customizeButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
+        # customizeButton.clicked.connect(self.customizeWindow)
         
         # tombol plan
         planButton = QPushButton(self)
@@ -174,6 +176,7 @@ class customizeWorkout(QWidget):
         planButton.move(807, 58)
         planButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
+        planButton.clicked.connect(self.planWindow)
 
         # tombol list
         listButton = QPushButton(self)
@@ -190,6 +193,7 @@ class customizeWorkout(QWidget):
         listButton.move(898, 58)
         listButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
+        listButton.clicked.connect(self.listWindow)
         
         # tombol history
         historyButton = QPushButton(self)
@@ -435,7 +439,15 @@ class customizeWorkout(QWidget):
         saveButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))       
         saveButton.clicked.connect(saveButtonClicked)
+
+    def planWindow(self):
+        self.switch.emit("plan", self.clickedRowData, {})
     
+    def listWindow(self):
+        self.switch.emit("listLatihan", {})
+    
+    def dashboardWindow(self):
+        self.switch.emit("dashboard", {})
                 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

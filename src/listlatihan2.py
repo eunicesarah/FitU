@@ -17,7 +17,7 @@ card_color = '#D2DCC4'
 class listLatihan2(QWidget):
     
     
-    switch = pyqtSignal(str, dict)
+    switch = pyqtSignal(str, int, dict)
     def __init__(self):
         super().__init__()    
         self.con = sqlite3.connect('fitu.db')
@@ -271,7 +271,7 @@ class listLatihan2(QWidget):
         self.switch.emit("customize", {})
         
     def planWindow(self):
-        self.switch.emit("plan", {})
+        self.switch.emit("plan", self.clickedRowData, {})
         
     def dashboard(self):
         self.switch.emit("dashboard", {})

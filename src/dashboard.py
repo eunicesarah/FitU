@@ -5,7 +5,7 @@ from PyQt6.QtGui import QCursor, QFont, QPixmap, QMovie
 from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QWidget, QScrollArea, QVBoxLayout, QHBoxLayout
 import sqlite3
 
-cur = sqlite3.connect("fitu.db").cursor()
+# cur = sqlite3.connect("fitu.db").cursor()
 
 background = '#5A8D6C'
 button_color = '#174728'
@@ -52,10 +52,12 @@ styleSheetCard = (
 
 
 class dashboard(QWidget):
-    switch = pyqtSignal(str, dict)
+    switch = pyqtSignal(str, int,dict)
     def __init__(self, user=None):
         super().__init__()
-        self.biodata = cur.execute("SELECT * FROM user").fetchall()
+        self.con = sqlite3.connect("fitu.db")
+        self.cur = self.con.cursor()
+        self.biodata = self.cur.execute("SELECT * FROM user").fetchall()
         print(self.biodata)
         # if (self.biodata == None):
         #     self.switch.emit('register', {})
@@ -69,7 +71,7 @@ class dashboard(QWidget):
         #     }
         # else:
         #     self.user = user
-        self.con = sqlite3.connect("fitu.db")
+        
         self.index_history = int(-1)
         self.banyaknyaKartu = int(-1)
         self.dashboardWindow()
@@ -83,9 +85,9 @@ class dashboard(QWidget):
         self.element()
 
     def historyElement(self, historyIdx, idx):
-        self.cur = self.con.cursor()
+        # self.cur = self.con.cursor()
         self.index_history = idx
-        tanggal = cur.execute(f"""
+        tanggal = self.cur.execute(f"""
             SELECT strftime(date) FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
         """).fetchone()[0]
         
@@ -94,7 +96,7 @@ class dashboard(QWidget):
         self.card.setPixmap(QPixmap('img/card-dashboard.png'))
         self.card.move(633, 172)
 
-        daftar_latihan = cur.execute(f"""
+        daftar_latihan = self.cur.execute(f"""
             SELECT name FROM riwayat_latihan WHERE date = '{tanggal}'
         """).fetchall()
 
@@ -110,7 +112,7 @@ class dashboard(QWidget):
         self.date.setFont(dateFont)
         self.date.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
-        keterangan = cur.execute(f"""
+        keterangan = self.cur.execute(f"""
                 SELECT tot_duration, title_program FROM riwayat_latihan WHERE date = '{tanggal}'
         """).fetchone()
         self.duration = QLabel(self)
@@ -160,13 +162,13 @@ class dashboard(QWidget):
             self.label.setStyleSheet(styleSheetCard)
             self.hbox.addWidget(self.label)
             nama_latihan = daftar_latihan[j][0]
-            repetisi_latihan = cur.execute(f"""
+            repetisi_latihan = self.cur.execute(f"""
                 SELECT repetition FROM daftar_latihan WHERE title = '{nama_latihan}'
             """).fetchone()
-            durasi_latihan = cur.execute(f"""
+            durasi_latihan = self.cur.execute(f"""
                 SELECT duration FROM daftar_latihan WHERE title = '{nama_latihan}'
             """).fetchone()
-            gambar_latihan = cur.execute(f"""
+            gambar_latihan = self.cur.execute(f"""
                 SELECT gif FROM daftar_latihan WHERE title = '{nama_latihan}'
             """).fetchone()
             self.con.commit()
@@ -187,7 +189,7 @@ class dashboard(QWidget):
             self.show_repetisi_latihan.setFont(repetisiFont)
             self.show_repetisi_latihan.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
-            self.gif = cur.execute(f"""
+            self.gif = self.cur.execute(f"""
                 SELECT gif FROM daftar_latihan WHERE title = '{nama_latihan}'
                 """).fetchone()[0]
             self.gif2 = QMovie(self.gif)
@@ -397,7 +399,7 @@ class dashboard(QWidget):
         start.clicked.connect(self.planWindow)
 
         # membuat history card
-        historyIdx = cur.execute("""
+        historyIdx = self.cur.execute("""
                                 SELECT DISTINCT history_id FROM riwayat_latihan
                                 """).fetchall()
         
@@ -423,15 +425,15 @@ class dashboard(QWidget):
                 self.kiri.show()
                 self.kanan.show()
             self.scroll.setParent(None)
-            tanggal = cur.execute(f"""
+            tanggal = self.cur.execute(f"""
             SELECT strftime(date) FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
         """).fetchone()[0]
             self.date.setText(f"{tanggal}")
-            daftar_latihan = cur.execute(f"""
+            daftar_latihan = self.cur.execute(f"""
                 SELECT name FROM riwayat_latihan WHERE date = '{tanggal}'
                 """).fetchall()
             jumlahCard = len(daftar_latihan)
-            keterangan = cur.execute(f"""
+            keterangan = self.cur.execute(f"""
                 SELECT tot_duration, title_program FROM riwayat_latihan WHERE date = '{tanggal}'
                 """).fetchone()
             
@@ -473,13 +475,13 @@ class dashboard(QWidget):
                 self.label.setStyleSheet(styleSheetCard)
                 self.hbox.addWidget(self.label)
                 nama_latihan = daftar_latihan[j][0]
-                repetisi_latihan = cur.execute(f"""
+                repetisi_latihan = self.cur.execute(f"""
                     SELECT repetition FROM daftar_latihan WHERE title = '{nama_latihan}'
                 """).fetchone()
-                durasi_latihan = cur.execute(f"""
+                durasi_latihan = self.cur.execute(f"""
                     SELECT duration FROM daftar_latihan WHERE title = '{nama_latihan}'
                 """).fetchone()
-                gambar_latihan = cur.execute(f"""
+                gambar_latihan = self.cur.execute(f"""
                     SELECT gif FROM daftar_latihan WHERE title = '{nama_latihan}'
                 """).fetchone()
                 self.con.commit()
@@ -500,7 +502,7 @@ class dashboard(QWidget):
                 self.show_repetisi_latihan.setFont(repetisiFont)
                 self.show_repetisi_latihan.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
-                self.gif = cur.execute(f"""
+                self.gif = self.cur.execute(f"""
                     SELECT gif FROM daftar_latihan WHERE title = '{nama_latihan}'
                     """).fetchone()[0]
                 self.gif2 = QMovie(self.gif)
@@ -528,15 +530,15 @@ class dashboard(QWidget):
                 self.kiri.show()
                 self.kanan.show()
             self.scroll.setParent(None)
-            tanggal = cur.execute(f"""
+            tanggal = self.cur.execute(f"""
             SELECT strftime(date) FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
         """).fetchone()[0]
             self.date.setText(f"{tanggal}")
-            daftar_latihan = cur.execute(f"""
+            daftar_latihan = self.cur.execute(f"""
                 SELECT name FROM riwayat_latihan WHERE date = '{tanggal}'
                 """).fetchall()
             jumlahCard = len(daftar_latihan)
-            keterangan = cur.execute(f"""
+            keterangan = self.cur.execute(f"""
                 SELECT tot_duration, title_program FROM riwayat_latihan WHERE date = '{tanggal}'
                 """).fetchone()
             
@@ -578,13 +580,13 @@ class dashboard(QWidget):
                 self.label.setStyleSheet(styleSheetCard)
                 self.hbox.addWidget(self.label)
                 nama_latihan = daftar_latihan[j][0]
-                repetisi_latihan = cur.execute(f"""
+                repetisi_latihan = self.cur.execute(f"""
                     SELECT repetition FROM daftar_latihan WHERE title = '{nama_latihan}'
                 """).fetchone()
-                durasi_latihan = cur.execute(f"""
+                durasi_latihan = self.cur.execute(f"""
                     SELECT duration FROM daftar_latihan WHERE title = '{nama_latihan}'
                 """).fetchone()
-                gambar_latihan = cur.execute(f"""
+                gambar_latihan = self.cur.execute(f"""
                     SELECT gif FROM daftar_latihan WHERE title = '{nama_latihan}'
                 """).fetchone()
                 self.con.commit()
@@ -605,7 +607,7 @@ class dashboard(QWidget):
                 self.show_repetisi_latihan.setFont(repetisiFont)
                 self.show_repetisi_latihan.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
-                self.gif = cur.execute(f"""
+                self.gif = self.cur.execute(f"""
                     SELECT gif FROM daftar_latihan WHERE title = '{nama_latihan}'
                     """).fetchone()[0]
                 self.gif2 = QMovie(self.gif)
@@ -619,7 +621,7 @@ class dashboard(QWidget):
             self.scroll.show()
     
     def planWindow(self):
-        self.switch.emit("plan", {})
+        self.switch.emit("plan", 0, {})
     
     def listWindow(self):
         self.switch.emit("listLatihan", {})
