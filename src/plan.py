@@ -5,7 +5,6 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap, QCursor, QFont
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QScrollArea
 
-# COLORS PALLETE
 BACKGROUNDCOLOR = '#5A8D6C'
 BUTTONCOLOR = '#174728'
 TEXTCOLOR = '#EEEEE2'
@@ -325,8 +324,6 @@ class plan(QWidget):
                 image.setFixedSize(160, 160)
 
                 scrollLayout2.addWidget(exLabel)
-
-            # set the widget of scroll2 to scrollWidget2 to update the view
             scroll2.setWidget(scrollWidget2)
             
         font = QFont()
