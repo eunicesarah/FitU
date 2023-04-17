@@ -18,7 +18,9 @@ class controller:
         self.listLatihan = listLatihan2()
         self.listLatihan.switch.connect(self.fromListLatihan)
         self.customize = customizeWorkout()
+        self.customize.switch.connect(self.fromCustomize)
         self.plan = plan()
+        # self.plan.switch.connect(self.fromPlan)
         pass
 
         
@@ -53,6 +55,26 @@ class controller:
             self.dashboard.show()
         elif (page == "customize"):
             self.customize.show()
+        elif (page == "plan"):
+            self.plan.show()
+
+    def fromPlan(self, page):
+        self.plan.close()
+        if (page == "dashboard"):
+            self.dashboard.show()
+        elif (page == "customize"):
+            self.customize.show()
+        elif (page == "listLatihan"):
+            self.listLatihan.show()
+
+    def fromCustomize(self, page):
+        self.customize.close()
+        if (page == "dashboard"):
+            self.dashboard.show()
+        elif (page == "listLatihan"):
+            self.listLatihan.show()
+        elif (page == "plan"):
+            self.plan.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -143,7 +143,7 @@ class listLatihan2(QWidget):
         listButton.move(1025, 53)
         listButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
-        listButton.clicked.connect(self.listWindow)
+        # listButton.clicked.connect(self.listWindow)
         
         
         # # tombol history
@@ -272,9 +272,6 @@ class listLatihan2(QWidget):
         
     def planWindow(self):
         self.switch.emit("plan", {})
-    
-    def listWindow(self):
-        self.switch.emit("listLatihan", {})
         
     def dashboard(self):
         self.switch.emit("dashboard", {})
