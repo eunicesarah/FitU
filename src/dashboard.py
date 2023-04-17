@@ -350,23 +350,6 @@ class dashboard(QWidget):
             QCursor(Qt.CursorShape.PointingHandCursor))
         listButton.clicked.connect(self.listWindow)
         
-        
-        # # tombol history
-        # historyButton = QPushButton(self)
-        # historyButton.setText('History')
-        # historyButton.setStyleSheet(f'''
-        # QPushButton {{
-        #     color: {text_color};
-        #     background-color: {background};
-        #     border: none;
-        #     border-radius: 20px;
-        # }}
-        # ''')
-        # historyButton.setFont(buttonFont)
-        # historyButton.move(979, 58)
-        # historyButton.setCursor(
-        #     QCursor(Qt.CursorShape.PointingHandCursor))
-        
         # foto profil
         profilePhoto = QLabel(self)
         profilePhoto.setPixmap(QPixmap('img/profile-dashboard.png'))
@@ -411,6 +394,7 @@ class dashboard(QWidget):
         start.setFixedSize(233, 47) #pake ini buat kalau dia buletan
         start.move(101, 511)    
         start.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        start.clicked.connect(self.planWindow)
 
         # membuat history card
         historyIdx = cur.execute("""
