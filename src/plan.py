@@ -354,7 +354,6 @@ class plan(QWidget):
         progText.setFont(font)
         progText.move(599, 182)
         
-
         startButton = QPushButton(self)
         startButton.setFont(font)
         startButton.setText("START >")
