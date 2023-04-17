@@ -14,6 +14,7 @@ class plan(QWidget):
     switch = pyqtSignal(str, int, dict )
     def __init__(self):
         super().__init__()
+        self.clickedRowData = 0
         self.con = sqlite3.connect('fitu.db')
         self.programExercises = self.fetchProgramExercises()
         self.planWindow()
@@ -376,13 +377,15 @@ class plan(QWidget):
         custButton.clicked.connect(self.customWindow)
     
     def dashboardWindow(self):
-        self.switch.emit("dashboard", {})
+        self.switch.emit("dashboard",0, {})
     
     def listWindow(self):
-        self.switch.emit("listLatihan", {})
+        self.switch.emit("listLatihan", 0, {})
     
     def customWindow(self):
         self.switch.emit("customize", self.clickedRowData, {})
+        # else:
+        #     self.switch.emit("customize", 0, {})
     
     def plan2Window(self):
         self.switch.emit("plan2", self.clickedRowData, {})

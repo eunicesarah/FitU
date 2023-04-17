@@ -257,13 +257,14 @@ class plan2(QWidget):
             print(nameExe)
             date = time.strftime("%Y-%m-%d", time.localtime())
             print(date)
+            histId = self.c.execute("SELECT DISTINCT history_id FROM riwayat_latihan").fetchall()
             totDuration = time.time() - self.start
             print(totDuration)
             for i in range (len(self.latihan)):
                 print(nameExe[i][0], titleProgram[0], date, int(totDuration))
-                self.c.execute(f"""INSERT INTO riwayat_latihan (program_id, name, title_program, date, calories, tot_duration) 
+                self.c.execute(f"""INSERT INTO riwayat_latihan (history_id, program_id, name, title_program, date, calories, tot_duration) 
                 VALUES 
-                ({self.program_id}, '{nameExe[i][0]}', '{(titleProgram[0])}', '{date}', NULL, {int(totDuration)})""")
+                ({len(histId)+401}, {self.program_id}, '{nameExe[i][0]}', '{(titleProgram[0])}', '{date}', NULL, {int(totDuration)})""")
                 self.conn.commit()
             self.switch.emit("endOfExe", {})
 
@@ -285,7 +286,7 @@ class plan2(QWidget):
     #     # historyButton.clicked.connect(self.addHistory)
 
     def backToPlan(self):
-        self.switch.emit("plan", {})
+        self.switch.emit("plan", 0, {})
     
 if __name__ == "__main__":
     

@@ -86,6 +86,7 @@ class dashboard(QWidget):
 
     def historyElement(self, historyIdx, idx):
         # self.cur = self.con.cursor()
+        print(idx)
         self.index_history = idx
         tanggal = self.cur.execute(f"""
             SELECT strftime(date) FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
@@ -97,7 +98,7 @@ class dashboard(QWidget):
         self.card.move(633, 172)
 
         daftar_latihan = self.cur.execute(f"""
-            SELECT name FROM riwayat_latihan WHERE date = '{tanggal}'
+            SELECT name FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
         """).fetchall()
 
         jumlahCard = len(daftar_latihan)
@@ -113,8 +114,9 @@ class dashboard(QWidget):
         self.date.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
         keterangan = self.cur.execute(f"""
-                SELECT tot_duration, title_program FROM riwayat_latihan WHERE date = '{tanggal}'
+                SELECT tot_duration, title_program FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
         """).fetchone()
+        print(keterangan)
         self.duration = QLabel(self)
         self.duration.setText("Duration : " + str(keterangan[0]) + " minutes")
         self.duration.setStyleSheet(f'color: {button_color}; background-color: {card_color};')
@@ -127,7 +129,7 @@ class dashboard(QWidget):
         self.prog.setText("Program Name: " + keterangan[1])
         self.prog.setStyleSheet(f'color: {button_color}; background-color: {card_color};')
         self.prog.move(667, 317)
-        self.prog.setFixedWidth(300)
+        self.prog.setFixedWidth(497)
         self.prog.setFont(historyFont)
         self.prog.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
@@ -365,13 +367,13 @@ class dashboard(QWidget):
         if(self.biodata == []):
             self.hello.setText(f"Hello, dummy!")
         else:
-            self.hello.setText(f"Hello, {self.biodata[0][0]}!")
+            self.hello.setText(f"Hello, {self.biodata[0][0].split(' ')[0]}!")
         self.hello.setStyleSheet(f'color: {text_color};')
         self.hello.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
         # quote
         quote = QLabel(self)
-        quote.setText("Saran quote dong maz\nbingung mau naro quote apa nih")
+        quote.setText("“Strength does not come from\nphysical capacity. It comes from\nan indomitable will.”\n-Mahatma Gandhi")
         quote.setStyleSheet(f'color: {text_color};')
         quote.move(101, 320)
         quote.setFont(quoteFont)
@@ -403,6 +405,7 @@ class dashboard(QWidget):
                                 SELECT DISTINCT history_id FROM riwayat_latihan
                                 """).fetchall()
         
+        print(historyIdx)
         # menyiapkan history card
 
         if (len(historyIdx) <= 0):
@@ -428,14 +431,16 @@ class dashboard(QWidget):
             tanggal = self.cur.execute(f"""
             SELECT strftime(date) FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
         """).fetchone()[0]
+            print('tanggal',tanggal)
             self.date.setText(f"{tanggal}")
             daftar_latihan = self.cur.execute(f"""
-                SELECT name FROM riwayat_latihan WHERE date = '{tanggal}'
+                SELECT name FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
                 """).fetchall()
             jumlahCard = len(daftar_latihan)
             keterangan = self.cur.execute(f"""
-                SELECT tot_duration, title_program FROM riwayat_latihan WHERE date = '{tanggal}'
+                SELECT tot_duration, title_program FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
                 """).fetchone()
+            print('keterangan',keterangan)
             
             self.duration.setText("Duration : " + str(keterangan[0]) + " minutes")
             self.prog.setText("Program Name: " + keterangan[1])
@@ -535,11 +540,11 @@ class dashboard(QWidget):
         """).fetchone()[0]
             self.date.setText(f"{tanggal}")
             daftar_latihan = self.cur.execute(f"""
-                SELECT name FROM riwayat_latihan WHERE date = '{tanggal}'
+                SELECT name FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
                 """).fetchall()
             jumlahCard = len(daftar_latihan)
             keterangan = self.cur.execute(f"""
-                SELECT tot_duration, title_program FROM riwayat_latihan WHERE date = '{tanggal}'
+                SELECT tot_duration, title_program FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
                 """).fetchone()
             
             self.duration.setText("Duration : " + str(keterangan[0]) + " minutes")
@@ -624,10 +629,10 @@ class dashboard(QWidget):
         self.switch.emit("plan", 0, {})
     
     def listWindow(self):
-        self.switch.emit("listLatihan", {})
+        self.switch.emit("listLatihan",0,  {})
     
     def customWindow(self):
-        self.switch.emit("customize", {})
+        self.switch.emit("customize", 0, {})
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)

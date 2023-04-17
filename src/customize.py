@@ -15,11 +15,12 @@ cardColor = '#D2DCC4'
 class customizeWorkout(QWidget):
     switch = pyqtSignal(str, int, dict)
 
-    def __init__(self):
+    def __init__(self, program_id):
         
         super().__init__()
         self.con = sqlite3.connect('fitu.db')
-        self.listEx = self.fetchListEx()          
+        self.listEx = self.fetchListEx()    
+        self.program_id = program_id  
         self.setupGUI()
         
     def fetchListEx(self):
@@ -306,9 +307,50 @@ class customizeWorkout(QWidget):
         scroll2.setWidget(scrollWidget2)
         
         area2 = []
-        
+
+        if self.program_id != 0:
+            cur = self.con.cursor()
+            self.latihan = cur.execute(f"SELECT exercise_id FROM daftar_latihan NATURAL JOIN latihan_program WHERE program_id = {self.program_id}").fetchall()
+            print(self.latihan)
+            for i in range(len(self.latihan)):
+                area2.append(self.latihan[i][0])
+                exLabel = QLabel(self)
+                exLabel.setFixedSize(367, 99)
+                exLabel.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
+                exLabel1 = QLabel(exLabel)
+                exLabel1.move(10, 10)
+                exLabel1.setFixedSize(79, 79)
+                exLabel1.setStyleSheet(styleSheet5)
+                
+                #add gif
+                gif = QMovie('img/exe-pushup.gif')
+                exLabel1.setMovie(gif)
+                gif.start()
+                gif.setScaledSize(QSize(79, 79))
+                gif.setSpeed(100)
+                title = QLabel(exLabel)
+                title.setText(f'<font style="font-size:24px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][1]}<b>')
+                title.move(100, 15)
+                repDur = QLabel(exLabel)
+                if(i<8):
+                        repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][4]} Seconds<b>')
+                        repDur.move(100, 60)
+                else:
+                    repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][5]} Repetition<b>')
+                    repDur.move(100,60)
+                deleteButton = QPushButton(exLabel)
+                deleteButton.setIcon(QIcon('img/delete button.png'))
+                deleteButton.setIconSize(QPixmap('img/delete button.png').size())
+                deleteButton.setGeometry(320, 55, 36, 36)
+                deleteButton.move(320, 55)
+                deleteButton.setCursor(
+                    QCursor(Qt.CursorShape.PointingHandCursor))
+                deleteButton.clicked.connect(lambda checked, index=i: handleDeleteButtonClicked(index, exLabel, scrollLayout2))
+                scrollLayout2.addWidget(exLabel)
+
         def handleButtonClicked(i, buttonList):
-            area2.append(i)
+
+            area2.append(self.listEx[i][0])
             button = buttonList[i]
             button.setEnabled(False)
             button.setIcon(QIcon('img/check button.png'))
@@ -332,10 +374,10 @@ class customizeWorkout(QWidget):
             title.move(100, 15)
             repDur = QLabel(exLabel)
             if(i<8):
-                    repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][4]} Detik<b>')
+                    repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][4]} Seconds<b>')
                     repDur.move(100, 60)
             else:
-                repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][5]} Repetisi<b>')
+                repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][5]} Repetition<b>')
                 repDur.move(100,60)
             deleteButton = QPushButton(exLabel)
             deleteButton.setIcon(QIcon('img/delete button.png'))
@@ -360,7 +402,7 @@ class customizeWorkout(QWidget):
             if(progNameInput.text() == '' or scrollLayout2 == []):
                 QMessageBox.about(self, "Error", "Please input program name")
             else:
-                # QMessageBox.about(self, "Success", "Program saved")
+                QMessageBox.about(self, "Success", "Program saved")
                 # self.close()
                 cur = self.con.cursor()
                 data = cur.execute("SELECT program_id FROM program")
@@ -370,11 +412,11 @@ class customizeWorkout(QWidget):
                     )
                 for i in area2:
                     cur.execute(
-                        f"INSERT INTO latihan_program (program_id, exercise_id) VALUES ({lenProg+1} ,{self.listEx[i][0]})"
+                        f"INSERT INTO latihan_program (program_id, exercise_id) VALUES ({lenProg+1} ,{i})"
                         )
                 print(lenProg)
                 self.con.commit()
-                self.close()
+                
                 
                 
                 
@@ -441,13 +483,13 @@ class customizeWorkout(QWidget):
         saveButton.clicked.connect(saveButtonClicked)
 
     def planWindow(self):
-        self.switch.emit("plan", self.clickedRowData, {})
+        self.switch.emit("plan", 0, {})
     
     def listWindow(self):
-        self.switch.emit("listLatihan", {})
+        self.switch.emit("listLatihan", 0, {})
     
     def dashboardWindow(self):
-        self.switch.emit("dashboard", {})
+        self.switch.emit("dashboard", 0, {})
                 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

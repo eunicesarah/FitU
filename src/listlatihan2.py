@@ -268,13 +268,13 @@ class listLatihan2(QWidget):
         
         scroll.setWidget(scrollWidget)
     def customWindow(self):
-        self.switch.emit("customize", {})
+        self.switch.emit("customize", 0, {})
         
     def planWindow(self):
-        self.switch.emit("plan", self.clickedRowData, {})
+        self.switch.emit("plan", 0, {})
         
     def dashboard(self):
-        self.switch.emit("dashboard", {})
+        self.switch.emit("dashboard",0, {})
         
 class MyPopup(QDialog):
     def __init__(self, count, listLat):

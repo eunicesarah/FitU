@@ -20,7 +20,7 @@ class controller:
         self.dashboard.switch.connect(self.fromDashboard)
         self.listLatihan = listLatihan2()
         self.listLatihan.switch.connect(self.fromListLatihan)
-        self.customize = customizeWorkout()
+        self.customize = customizeWorkout(0)
         self.customize.switch.connect(self.fromCustomize)
         self.plan = plan()
         self.plan.switch.connect(self.fromPlan)
@@ -48,7 +48,7 @@ class controller:
         self.dashboard.switch.connect(self.fromDashboard)
         self.dashboard.show()
 
-    def fromDashboard(self, page):
+    def fromDashboard(self, page, program_id):
         self.registerWin.close()
         self.dashboard.close()
         if (page == "listLatihan"):
@@ -59,7 +59,7 @@ class controller:
             self.plan.show()
 
 
-    def fromListLatihan(self, page):
+    def fromListLatihan(self, page, program_id):
         self.listLatihan.close()
         if (page == "dashboard"):
             self.dashboard.show()
@@ -73,17 +73,25 @@ class controller:
         if (page == "dashboard"):
             self.dashboard.show()
         elif (page == "customize"):
+            self.customize = customizeWorkout(program_id)
+            self.customize.switch.connect(self.fromCustomize)
             self.customize.show()
         elif (page == "listLatihan"):
             self.listLatihan.show()
+        elif (page == "plan2"):
+            self.plan2 = plan2(program_id)
+            self.plan2.switch.connect(self.toEndOfExe)
+            self.plan2.show()
 
-    def fromCustomize(self, page):
+    def fromCustomize(self, page, program_id):
         self.customize.close()
         if (page == "dashboard"):
             self.dashboard.show()
         elif (page == "listLatihan"):
             self.listLatihan.show()
         elif (page == "plan"):
+            self.plan = plan()
+            self.plan.switch.connect(self.fromPlan)
             self.plan.show()
 
     def toPlan2(self, page, program_id):
@@ -102,6 +110,8 @@ class controller:
     def fromEndOfExe(self,page):
         self.endOfExe.close()
         if (page == "dashboard"):
+            self.dashboard = dashboard()
+            self.dashboard.switch.connect(self.fromDashboard)
             self.dashboard.show()
 
     def initDatabase(self):
@@ -133,13 +143,14 @@ class controller:
 
             cur.execute("""
                         CREATE TABLE IF NOT EXISTS riwayat_latihan (
-                        history_id integer PRIMARY KEY AUTOINCREMENT,
+                        history_id integer,
                         program_id integer,
                         name text,
                         title_program text,
                         calories integer,
                         date text,
-                        tot_duration integer
+                        tot_duration integer,
+                        FOREIGN KEY (program_id) REFERENCES program (program_id)
                         )
                         """)
             cur.execute("""
@@ -205,6 +216,7 @@ class controller:
                             (3, 205),
                             (3, 106)
                         """)
+            
             # cur.execute("""
             #         INSERT INTO riwayat_latihan
             #             (program_id, name, title_program, calories, date, tot_duration)
