@@ -20,7 +20,7 @@ def tesBaca():
                 title text,
                 description text,
                 goals text,
-                duration text,
+                duration integer,
                 repetition integer,
                 gif text
                 )
@@ -56,22 +56,22 @@ def tesBaca():
                 INSERT or IGNORE INTO daftar_latihan 
                     (exercise_id, title, description, goals, duration, repetition, gif)
                 VALUES 
-                    (201, 'Push Up', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor','Goals', NULL, 10, '../img/push-up.gif'),
-                    (202, "Sit Up", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
-                    (203, "Pull Up", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
-                    (204, "Squat Jump", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
-                    (205, "Lunges", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
-                    (206, "Crunches", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
-                    (207, "Burpees", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
-                    (208, "Bicycle Crunch", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "../img/"),
-                    (101, "Jumping Rope", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
-                    (102, "Running", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
-                    (103, "Jumping Jacks", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
-                    (104, "Plank", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
-                    (105, "Bridge", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
-                    (106, "High Knees", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
-                    (107, "Squat", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "../img/"),
-                    (108, "Russian Twist", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL,"../img/")
+                    (101, "Jumping Rope", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "img/"),
+                    (102, "Running", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "img/"),
+                    (103, "Jumping Jacks", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "img/exe-jumpingjack.gif"),
+                    (104, "Plank", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "img/exe-plank.gif"),
+                    (105, "Bridge", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "img/exe-bridges.gif"),
+                    (106, "High Knees", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "img/exe-highknee.gif"),
+                    (107, "Mountain Climber", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL, "img/exe-mountain.gif"),
+                    (108, "Russian Twist", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', 30, NULL,"img/exe-russian.gif"),
+                    (201, 'Push Up', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor','Goals', NULL, 10, 'img/exe-pushup.gif'),
+                    (202, "Sit Up", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "img/exe-situp.gif"),
+                    (203, "Pull Up", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "img/"),
+                    (204, "Squat Jump", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "img/"),
+                    (205, "Lunges", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "img/exe-lunges.gif"),
+                    (206, "Crunches", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "img/exe-crunches.gif"),
+                    (207, "Burpees", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "img/exe-burpees.gif"),
+                    (208, "Bicycle Crunch", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac venenatis purus. Nulla a fringilla ante. Aenean id ipsum pellentesque, convallis ex eget, cursus dolor", 'Goals', NULL, 10, "img/exe-bicycle.gif")
                 """)
 
     cur.execute("""
@@ -89,30 +89,40 @@ def tesBaca():
                     (program_id, exercise_id)
                 VALUES
                     (1, 201),
-                    (1, 202),
-                    (1, 203),
-                    (1, 204),
-                    (1, 205),
-                    (1, 206),
-                    (2, 207),
-                    (2, 208),
-                    (2, 201),
-                    (2, 202),
-                    (2, 203),
-                    (2, 204),
-                    (3, 205),
-                    (3, 206),
-                    (3, 207),
-                    (3, 208),
-                    (3, 201),
-                    (3, 202),
-                    (4, 203),
-                    (4, 204),
-                    (4, 205),
-                    (4, 206),
-                    (4, 207),
-                    (4, 208)
+                    (1, 105),
+                    (1, 106),
+                    (1, 202)
                 """)
+    cur.execute("""
+            INSERT INTO riwayat_latihan
+                (program_id, name, title_program, calories, date, tot_duration)
+            VALUES
+                (1, 'Push Up', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Sit Up', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Pull Up', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Squat Jump', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Lunges', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Crunches', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Burpees', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Bicycle Crunch', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Jumping Rope', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Running', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Jumping Jacks', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Plank', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Bridge', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'High Knees', 'Chest Day', 100, '2020-12-12', 30),
+                (1, 'Squat', 'Chest Day', 100, '2020-12-12', 30),
+                (2, 'Push Up', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Sit Up', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Pull Up', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Squat Jump', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Lunges', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Crunches', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Burpees', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Bicycle Crunch', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Jumping Rope', 'Leg Day', 100, '2020-12-15', 30),
+                (2, 'Running', 'Leg Day', 100, '2020-12-15', 30)
+            """)
 
     con.commit()
     con.close()
@@ -140,3 +150,4 @@ def tesBaca():
 
     # for i in daftarLatihan:
     #     print(i)
+tesBaca()
