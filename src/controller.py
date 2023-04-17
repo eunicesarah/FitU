@@ -1,36 +1,23 @@
 from PyQt6.QtWidgets import QApplication
 import sys
-import sqlite3
 from register import register
 from dashboard import dashboard
-from listlatihan2 import listLatihan2
-from tesBacaDB import tesBaca
-from customize import customizeWorkout
-from plan import plan
+from listLatihan import listLatihan
+from tesBacaDB import tesBacaDB
 class controller:
     def __init__(self):
-        self.conn = sqlite3.connect('fitu.db')
-        self.tesBacaDB = tesBaca()
+        self.tesBacaDB = tesBacaDB()
         self.registerWin = register()
         self.registerWin.switch.connect(self.fromRegister)
         self.dashboard = dashboard()
         self.dashboard.switch.connect(self.fromDashboard)
-        self.listLatihan = listLatihan2()
+        self.listLatihan = listLatihan()
         self.listLatihan.switch.connect(self.fromListLatihan)
-        self.customize = customizeWorkout()
-        self.plan = plan()
         pass
 
-        
     def start(self):
-        c = self.conn.cursor()
-        c.execute("SELECT * FROM user")
-        count = c.fetchone()
-        if (count != None):
-            # print("dashboard")
-            self.dashboard.show()        
-        else:
-            self.registerWin.show()
+        # nanti disini kasih validasi dulu, user udah ada apa belum
+        self.registerWin.show()
 
     def fromRegister(self):
         self.registerWin.close()
@@ -38,21 +25,13 @@ class controller:
 
     def fromDashboard(self, page):
         self.registerWin.close()
-        self.dashboard.close()
         if (page == "listLatihan"):
             self.listLatihan.show()
-        elif (page == "customize"):
-            self.customize.show()
-        elif (page == "plan"):
-            self.plan.show()
-
 
     def fromListLatihan(self, page):
         self.listLatihan.close()
         if (page == "dashboard"):
             self.dashboard.show()
-        elif (page == "customize"):
-            self.customize.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
