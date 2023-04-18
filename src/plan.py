@@ -1,20 +1,20 @@
 import sqlite3
 import sys
 
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QPixmap, QCursor, QFont
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QScrollArea
 
-# COLORS PALLETE
 BACKGROUNDCOLOR = '#5A8D6C'
 BUTTONCOLOR = '#174728'
 TEXTCOLOR = '#EEEEE2'
 CARDCOLOR = '#D2DCC4'
 
 class plan(QWidget):
-    
+    switch = pyqtSignal(str, int, dict )
     def __init__(self):
         super().__init__()
+        self.clickedRowData = 0
         self.con = sqlite3.connect('fitu.db')
         self.programExercises = self.fetchProgramExercises()
         self.planWindow()
@@ -176,7 +176,8 @@ class plan(QWidget):
         homeButton.setFixedSize(96, 42)
         homeButton.move(507, 53)    
         homeButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        
+        homeButton.clicked.connect(self.dashboardWindow)
+
         # Customize Button
         customizeButton = QPushButton(self)
         customizeButton.setText('Customize')
@@ -184,6 +185,7 @@ class plan(QWidget):
         customizeButton.setFont(buttonFont)
         customizeButton.move(649, 58)
         customizeButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        customizeButton.clicked.connect(self.customWindow)
         
         # Plan Button
         planButton = QPushButton(self)
@@ -200,6 +202,7 @@ class plan(QWidget):
         listButton.setFont(buttonFont)
         listButton.move(898, 58)
         listButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        listButton.clicked.connect(self.listWindow)
 
         # History Button
         historyButton = QPushButton(self)
@@ -253,10 +256,11 @@ class plan(QWidget):
             con = sqlite3.connect('fitu.db')
             c = con.cursor()
             c.execute("SELECT title FROM latihan_program, daftar_latihan WHERE latihan_program.exercise_id = daftar_latihan.exercise_id AND latihan_program.program_id = ?", (data[i][0],))
-            data2 = c.fetchall()
+            self.data2 = c.fetchall()
+            # c.commit()
             c.close()
 
-            predict = len(data2)
+            predict = len(self.data2)
             dur = QLabel(exButton)
             dur.setText(f'<font style="font-size:18px;" color="#D2DCC4"; font-family="Sogoe UI";>{predict} Minutes')
             dur.move(20, 50)
@@ -285,19 +289,20 @@ class plan(QWidget):
 
         # create a function to show exercise data based on index
         def showExercise(index):
-            clickedRowData = data[index][0]
+            self.clickedRowData = data[index][0]
             con = sqlite3.connect('fitu.db')
             c = con.cursor()
-            c.execute("SELECT title, repetition, duration, gif FROM latihan_program, daftar_latihan WHERE latihan_program.exercise_id = daftar_latihan.exercise_id AND latihan_program.program_id = ?", (clickedRowData,))
-            data2 = c.fetchall()
+            c.execute("SELECT title, repetition, duration, gif FROM latihan_program, daftar_latihan WHERE latihan_program.exercise_id = daftar_latihan.exercise_id AND latihan_program.program_id = ?", (self.clickedRowData,))
+            self.data3 = c.fetchall()
+            # print("clicked:" + str(clickedRowData))
             c.close()
 
             # clear the exercise data list
             exercise_data.clear()
 
             # append new exercise data to the list
-            for i in range(len(data2)):
-                exercise_data.append(data2[i])
+            for i in range(len(self.data3)):
+                exercise_data.append(self.data3[i])
 
             # remove all widgets from scrollLayout2
             for i in reversed(range(scrollLayout2.count())):
@@ -313,7 +318,7 @@ class plan(QWidget):
                 title.move(20, 15)
                 repDur = QLabel(exLabel)
                 if exercise_data[i][1] == None:
-                    repDur.setText(f'<font style="font-size:18px;" color="#D2DCC4"; font-family="Sogoe UI";>{exercise_data[i][2]} Minutes')
+                    repDur.setText(f'<font style="font-size:18px;" color="#D2DCC4"; font-family="Sogoe UI";>{exercise_data[i][2]} Seconds')
                 else:
                     repDur.setText(f'<font style="font-size:18px;" color="#D2DCC4"; font-family="Sogoe UI";>{exercise_data[i][1]} Repetitions')
                 repDur.move(20, 50)
@@ -325,8 +330,6 @@ class plan(QWidget):
                 image.setFixedSize(160, 160)
 
                 scrollLayout2.addWidget(exLabel)
-
-            # set the widget of scroll2 to scrollWidget2 to update the view
             scroll2.setWidget(scrollWidget2)
             
         font = QFont()
@@ -354,7 +357,6 @@ class plan(QWidget):
         progText.setFont(font)
         progText.move(599, 182)
         
-
         startButton = QPushButton(self)
         startButton.setFont(font)
         startButton.setText("START >")
@@ -363,6 +365,7 @@ class plan(QWidget):
         startButton.setStyleSheet(styleSheetStart)
         startButton.setFont(font1)
         startButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        startButton.clicked.connect(self.plan2Window)
 
         custButton = QPushButton(self)
         custButton.setFont(font)
@@ -371,6 +374,21 @@ class plan(QWidget):
         custButton.setStyleSheet(styleSheetCutomize)
         custButton.setFont(font1)
         custButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        custButton.clicked.connect(self.customWindow)
+    
+    def dashboardWindow(self):
+        self.switch.emit("dashboard",0, {})
+    
+    def listWindow(self):
+        self.switch.emit("listLatihan", 0, {})
+    
+    def customWindow(self):
+        self.switch.emit("customize", self.clickedRowData, {})
+        # else:
+        #     self.switch.emit("customize", 0, {})
+    
+    def plan2Window(self):
+        self.switch.emit("plan2", self.clickedRowData, {})
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

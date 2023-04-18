@@ -5,14 +5,14 @@ from PyQt6.QtGui import QFont, QPixmap, QCursor
 from PyQt6.QtCore import Qt, pyqtSignal
 
 class endOfExe(QWidget):
-    switch = pyqtSignal(str)
+    switch = pyqtSignal(str, dict)
     def __init__(self):
         super().__init__()
         self.conn = sqlite3.connect('fitu.db')
         self.setUpWindow()
     
     def setUpWindow(self):
-        self.setWindowTitle("FitU - Enf Of Exercise")
+        self.setWindowTitle("FitU - End Of Exercise")
         self.setFixedSize(1280, 720)
         self.setUpEndOfExe()
     
@@ -72,7 +72,7 @@ class endOfExe(QWidget):
         backButton.clicked.connect(self.backToDash)
     
     def backToDash(self):
-        self.switch.emit("dashboard")
+        self.switch.emit("dashboard", {})
     
 if __name__ == "__main__":
     

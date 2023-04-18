@@ -17,7 +17,7 @@ card_color = '#D2DCC4'
 class listLatihan2(QWidget):
     
     
-    switch = pyqtSignal(str, dict)
+    switch = pyqtSignal(str, int, dict)
     def __init__(self):
         super().__init__()    
         self.con = sqlite3.connect('fitu.db')
@@ -143,7 +143,7 @@ class listLatihan2(QWidget):
         listButton.move(1025, 53)
         listButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
-        listButton.clicked.connect(self.listWindow)
+        # listButton.clicked.connect(self.listWindow)
         
         
         # # tombol history
@@ -268,16 +268,13 @@ class listLatihan2(QWidget):
         
         scroll.setWidget(scrollWidget)
     def customWindow(self):
-        self.switch.emit("customize", {})
+        self.switch.emit("customize", 0, {})
         
     def planWindow(self):
-        self.switch.emit("plan", {})
-    
-    def listWindow(self):
-        self.switch.emit("listLatihan", {})
+        self.switch.emit("plan", 0, {})
         
     def dashboard(self):
-        self.switch.emit("dashboard", {})
+        self.switch.emit("dashboard",0, {})
         
 class MyPopup(QDialog):
     def __init__(self, count, listLat):
