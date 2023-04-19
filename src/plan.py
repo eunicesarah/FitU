@@ -2,7 +2,7 @@ import sqlite3
 import sys
 
 from PyQt6.QtCore import Qt, pyqtSignal
-from PyQt6.QtGui import QPixmap, QCursor, QFont
+from PyQt6.QtGui import QPixmap, QCursor, QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QScrollArea
 
 BACKGROUNDCOLOR = '#5A8D6C'
@@ -29,7 +29,8 @@ class plan(QWidget):
     def planWindow(self):
         self.label = QLabel("")
         self.label.setParent(self)
-        self.setWindowTitle('FitU')
+        self.setWindowTitle('FitU - Plan')
+        self.setWindowIcon(QIcon("img/logo.png"))
         self.setFixedSize(1280, 720)
         self.setStyleSheet(f'background-color: {BACKGROUNDCOLOR};')
         self.elements()
@@ -168,23 +169,24 @@ class plan(QWidget):
         logo.setPixmap(QPixmap('img/logo-dashboard.png'))
         logo.move(60, 45)
 
-        # Home Button
+       # tombol home
         homeButton = QPushButton(self)
         homeButton.setText('Home')
-        homeButton.setStyleSheet(styleSheetNavbar0)
+        homeButton.setStyleSheet(styleSheetNavbar0) 
         homeButton.setFont(buttonFont)
-        homeButton.setFixedSize(96, 42)
-        homeButton.move(507, 53)    
+        homeButton.setFixedSize(96, 42) #pake ini buat kalau dia buletan
+        homeButton.move(660, 53)  
+        homeButton.clicked.connect(self.dashboardWindow)  
         homeButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        homeButton.clicked.connect(self.dashboardWindow)
-
-        # Customize Button
+        
+         # tombol customize
         customizeButton = QPushButton(self)
         customizeButton.setText('Customize')
         customizeButton.setStyleSheet(styleSheetNavbar0)
         customizeButton.setFont(buttonFont)
-        customizeButton.move(649, 58)
-        customizeButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        customizeButton.move(798, 58)
+        customizeButton.setCursor(
+            QCursor(Qt.CursorShape.PointingHandCursor))
         customizeButton.clicked.connect(self.customWindow)
         
         # Plan Button
@@ -193,29 +195,21 @@ class plan(QWidget):
         planButton.setStyleSheet(styleSheetNavbar1)
         planButton.setFont(buttonFont)
         planButton.setFixedSize(80, 42)
-        planButton.move(784, 58)
+        planButton.move(942, 53)
 
-        # List Button
         listButton = QPushButton(self)
         listButton.setText('List')
         listButton.setStyleSheet(styleSheetNavbar0)
         listButton.setFont(buttonFont)
-        listButton.move(898, 58)
-        listButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        listButton.move(1047, 58)
+        listButton.setCursor(
+            QCursor(Qt.CursorShape.PointingHandCursor))
         listButton.clicked.connect(self.listWindow)
-
-        # History Button
-        historyButton = QPushButton(self)
-        historyButton.setText('History')
-        historyButton.setStyleSheet(styleSheetNavbar0)
-        historyButton.setFont(buttonFont)
-        historyButton.move(979, 58)
-        historyButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))   
-
-        # Profile Picture
-        profilePicture = QLabel(self)
-        profilePicture.setPixmap(QPixmap('img/profile-dashboard.png'))
-        profilePicture.move(1133, 45)
+        
+        # foto profil
+        profilePhoto = QLabel(self)
+        profilePhoto.setPixmap(QPixmap('img/profile-dashboard.png'))
+        profilePhoto.move(1133, 45)
 
         # Create Card
         # Right Side
@@ -248,6 +242,7 @@ class plan(QWidget):
             exButton.setFont(buttonFont)
             exButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             exButton.clicked.connect(lambda state, index=i: showExercise(index))
+            exButton.clicked.connect(self.enableStartButton)
             title = QLabel(exButton)
             title.setText(f'<font style="font-size:24px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{data[i][1]}<b>')
             title.move(20, 15)
@@ -260,6 +255,8 @@ class plan(QWidget):
             # c.commit()
             c.close()
 
+
+            # self.enableStartButton()
             predict = len(self.data2)
             dur = QLabel(exButton)
             dur.setText(f'<font style="font-size:18px;" color="#D2DCC4"; font-family="Sogoe UI";>{predict} Minutes')
@@ -294,7 +291,6 @@ class plan(QWidget):
             c = con.cursor()
             c.execute("SELECT title, repetition, duration, gif FROM latihan_program, daftar_latihan WHERE latihan_program.exercise_id = daftar_latihan.exercise_id AND latihan_program.program_id = ?", (self.clickedRowData,))
             self.data3 = c.fetchall()
-            # print("clicked:" + str(clickedRowData))
             c.close()
 
             # clear the exercise data list
@@ -357,15 +353,16 @@ class plan(QWidget):
         progText.setFont(font)
         progText.move(599, 182)
         
-        startButton = QPushButton(self)
-        startButton.setFont(font)
-        startButton.setText("START >")
-        startButton.move(1004, 620)
-        startButton.setFixedSize(144, 42)
-        startButton.setStyleSheet(styleSheetStart)
-        startButton.setFont(font1)
-        startButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        startButton.clicked.connect(self.plan2Window)
+        self.startButton = QPushButton(self)
+        self.startButton.setFont(font)
+        self.startButton.setText("START >")
+        self.startButton.move(1004, 620)
+        self.startButton.setFixedSize(144, 42)
+        self.startButton.setStyleSheet(styleSheetStart)
+        self.startButton.setFont(font1)
+        self.startButton.setEnabled(False)
+        self.startButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.startButton.clicked.connect(self.plan2Window)
 
         custButton = QPushButton(self)
         custButton.setFont(font)
@@ -384,11 +381,12 @@ class plan(QWidget):
     
     def customWindow(self):
         self.switch.emit("customize", self.clickedRowData, {})
-        # else:
-        #     self.switch.emit("customize", 0, {})
     
     def plan2Window(self):
         self.switch.emit("plan2", self.clickedRowData, {})
+    
+    def enableStartButton(self):
+        self.startButton.setEnabled(True)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

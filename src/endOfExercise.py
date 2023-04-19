@@ -1,7 +1,7 @@
 import sqlite3
 import sys
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QLineEdit, QPushButton, QRadioButton, QCheckBox, QMessageBox
-from PyQt6.QtGui import QFont, QPixmap, QCursor
+from PyQt6.QtGui import QFont, QPixmap, QCursor, QIcon
 from PyQt6.QtCore import Qt, pyqtSignal
 
 class endOfExe(QWidget):
@@ -14,6 +14,7 @@ class endOfExe(QWidget):
     def setUpWindow(self):
         self.setWindowTitle("FitU - End Of Exercise")
         self.setFixedSize(1280, 720)
+        self.setWindowIcon(QIcon("img/logo.png"))
         self.setUpEndOfExe()
     
     def setUpEndOfExe(self):
@@ -71,6 +72,7 @@ class endOfExe(QWidget):
         backButton.move(560, 450)
         backButton.clicked.connect(self.backToDash)
     
+
     def backToDash(self):
         self.switch.emit("dashboard", {})
     

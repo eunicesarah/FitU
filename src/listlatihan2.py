@@ -36,7 +36,7 @@ class listLatihan2(QWidget):
     def setUpListLatihanWindow(self):
         self.setFixedSize(1280,720)
         self.setWindowIcon(QIcon("img/logo.png"))
-        self.setWindowTitle("Fit-U - Daftar Latihan")
+        self.setWindowTitle("FitU - Daftar Latihan")
         self.setStyleSheet('background-color: #5A8D6C;')
     
     def openDetail(self, count, listLat):
@@ -140,7 +140,7 @@ class listLatihan2(QWidget):
         ''')
         listButton.setFont(buttonFont)
         listButton.setFixedSize(96, 42)
-        listButton.move(1025, 53)
+        listButton.move(1020, 53)
         listButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
         # listButton.clicked.connect(self.listWindow)
@@ -232,13 +232,13 @@ class listLatihan2(QWidget):
                     
                     repDur = QLabel(card)
                     if(count<8):
-                        repDur.setText(f'<font style="font-size:14px;font-family="Sogoe UI;"><b>{self.listLat[count][4]} Detik<b>')
+                        repDur.setText(f'<font style="font-size:14px;font-family="Sogoe UI;"><b>{self.listLat[count][4]} Seconds<b>')
                         repDur.setStyleSheet("color: #174728")
-                        repDur.move(203, 130)
+                        repDur.move(185, 130)
                     else:
-                        repDur.setText(f'<font style="font-size:14px;font-family="Sogoe UI;"><b>{self.listLat[count][5]} Repetisi<b>')
+                        repDur.setText(f'<font style="font-size:14px;font-family="Sogoe UI;"><b>{self.listLat[count][5]} Repetition<b>')
                         repDur.setStyleSheet("color: #174728")
-                        repDur.move(187,130)
+                        repDur.move(170,130)
                         
                     desc = QLabel(card)
                     t = f'<font style="font-size:12px;font-family="Sogoe UI;">{self.listLat[count][2]}'
@@ -339,11 +339,11 @@ class MyPopup(QDialog):
         
         repDur = QLabel(bg)
         if(count<8):
-            repDur.setText(f'<font style="font-size:17px;font-family="Sogoe UI;"><b>{listLat[count][4]} Detik<b>')
-            repDur.move(760, 140)
+            repDur.setText(f'<font style="font-size:17px;font-family="Sogoe UI;"><b>{listLat[count][4]} Seconds<b>')
+            repDur.move(755, 140)
         else:
-            repDur.setText(f'<font style="font-size:17px;font-family="Sogoe UI;"><b>{listLat[count][5]} Repetisi<b>')
-            repDur.move(740, 140)
+            repDur.setText(f'<font style="font-size:17px;font-family="Sogoe UI;"><b>{listLat[count][5]} Repetition<b>')
+            repDur.move(735, 140)
         repDur.setStyleSheet("color: #174728; background-color: #D2DCC4;")
         
         

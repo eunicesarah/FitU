@@ -1,9 +1,10 @@
 import sys
 
 from PyQt6.QtCore import Qt, pyqtSignal, QSize
-from PyQt6.QtGui import QCursor, QFont, QPixmap, QMovie
+from PyQt6.QtGui import QCursor, QFont, QPixmap, QMovie, QIcon
 from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QWidget, QScrollArea, QVBoxLayout, QHBoxLayout
 import sqlite3
+import random
 
 # cur = sqlite3.connect("fitu.db").cursor()
 
@@ -58,26 +59,14 @@ class dashboard(QWidget):
         self.con = sqlite3.connect("fitu.db")
         self.cur = self.con.cursor()
         self.biodata = self.cur.execute("SELECT * FROM user").fetchall()
-        print(self.biodata)
-        # if (self.biodata == None):
-        #     self.switch.emit('register', {})
-        #     self.user = {
-        #         'name': f'{self.biodata[0][0]}',
-        #         'height': self.biodata[0][1],
-        #         'weight': self.biodata[0][2],
-        #         'goal': f'{self.biodata[0][3]}',
-        #         'gender': f'{self.biodata[0][4]}',
-        #         'age': self.biodata[0][5]
-        #     }
-        # else:
-        #     self.user = user
-        
+     
         self.index_history = int(-1)
         self.banyaknyaKartu = int(-1)
         self.dashboardWindow()
     
     def dashboardWindow(self):
-        self.setWindowTitle('Dashboard - FitU')
+        self.setWindowTitle('FitU - Dashboard')
+        self.setWindowIcon(QIcon("img/logo.png"))
         self.setFixedSize(1280, 720)
         self.setStyleSheet(f'background-color: {background};')
         self.label = QLabel("")
@@ -86,7 +75,6 @@ class dashboard(QWidget):
 
     def historyElement(self, historyIdx, idx):
         # self.cur = self.con.cursor()
-        print(idx)
         self.index_history = idx
         tanggal = self.cur.execute(f"""
             SELECT strftime(date) FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
@@ -104,7 +92,6 @@ class dashboard(QWidget):
         jumlahCard = len(daftar_latihan)
 
         self.banyaknyaKartu = jumlahCard
-        print(self.banyaknyaKartu)
 
         self.date = QLabel(self)
         self.date.setText(f"{tanggal}")
@@ -116,7 +103,6 @@ class dashboard(QWidget):
         keterangan = self.cur.execute(f"""
                 SELECT tot_duration, title_program FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
         """).fetchone()
-        print(keterangan)
         self.duration = QLabel(self)
         self.duration.setText("Duration : " + str(keterangan[0]) + " minutes")
         self.duration.setStyleSheet(f'color: {button_color}; background-color: {card_color};')
@@ -146,13 +132,13 @@ class dashboard(QWidget):
         scroll_bar_style = """
             QScrollBar:horizontal {
                 border : 0px;
-                background-color: #5A8D6C;
+                background-color: #D2DCC4;
                 height: 10px;
                 margin: 0px 0px 0px 0px;
             }
             QScrollBar::handle:horizontal {
                 background-color: #174728;
-                border-radius: 50px;
+                border-radius: 3px;
                 border: 0px;
             }
         """
@@ -372,8 +358,11 @@ class dashboard(QWidget):
         self.hello.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
         # quote
+        # quote
+        angka = random.randint(1, 7)
+        isi_quote = self.cur.execute(f"SELECT quote FROM quotes WHERE id = {angka}").fetchone()
         quote = QLabel(self)
-        quote.setText("“Strength does not come from\nphysical capacity. It comes from\nan indomitable will.”\n-Mahatma Gandhi")
+        quote.setText(isi_quote[0])
         quote.setStyleSheet(f'color: {text_color};')
         quote.move(101, 320)
         quote.setFont(quoteFont)
@@ -405,7 +394,6 @@ class dashboard(QWidget):
                                 SELECT DISTINCT history_id FROM riwayat_latihan
                                 """).fetchall()
         
-        print(historyIdx)
         # menyiapkan history card
 
         if (len(historyIdx) <= 0):
@@ -431,7 +419,6 @@ class dashboard(QWidget):
             tanggal = self.cur.execute(f"""
             SELECT strftime(date) FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
         """).fetchone()[0]
-            print('tanggal',tanggal)
             self.date.setText(f"{tanggal}")
             daftar_latihan = self.cur.execute(f"""
                 SELECT name FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
@@ -440,7 +427,6 @@ class dashboard(QWidget):
             keterangan = self.cur.execute(f"""
                 SELECT tot_duration, title_program FROM riwayat_latihan WHERE history_id = '{historyIdx[self.index_history][0]}'
                 """).fetchone()
-            print('keterangan',keterangan)
             
             self.duration.setText("Duration : " + str(keterangan[0]) + " minutes")
             self.prog.setText("Program Name: " + keterangan[1])
@@ -459,13 +445,13 @@ class dashboard(QWidget):
             scroll_bar_style = """
                 QScrollBar:horizontal {
                     border : 0px;
-                    background-color: #5A8D6C;
+                    background-color: #D2DCC4;
                     height: 10px;
                     margin: 0px 0px 0px 0px;
                 }
                 QScrollBar::handle:horizontal {
                     background-color: #174728;
-                    border-radius: 50px;
+                    border-radius: 3px;
                     border: 0px;
                 }
             """
@@ -565,13 +551,13 @@ class dashboard(QWidget):
             scroll_bar_style = """
                 QScrollBar:horizontal {
                     border : 0px;
-                    background-color: #5A8D6C;
+                    background-color: #D2D2D2;
                     height: 10px;
                     margin: 0px 0px 0px 0px;
                 }
                 QScrollBar::handle:horizontal {
                     background-color: #174728;
-                    border-radius: 50px;
+                    border-radius: 3px;
                     border: 0px;
                 }
             """
