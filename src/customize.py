@@ -58,7 +58,8 @@ class customizeWorkout(QWidget):
     def elements(self): 
         buttonFont = QFont()
         buttonFont.setFamily('Segoe UI')
-        buttonFont.setPointSize(18)  
+        buttonFont.setPointSize(18)
+        buttonFont.setBold(True)
         
         #STYLESHEET
         styleSheet = (
@@ -136,10 +137,14 @@ class customizeWorkout(QWidget):
             border: none;
             border-radius: 20px;
         }}
-        ''') 
+        QPushButton:hover {{
+            color: {button_color};
+        }}
+
+        ''')
         homeButton.setFont(buttonFont)
         # homeButton.setFixedSize(96, 42) #pake ini buat kalau dia buletan
-        homeButton.move(507, 53)    
+        homeButton.move(670, 58)    
         homeButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
         homeButton.clicked.connect(self.dashboardWindow)
@@ -156,8 +161,8 @@ class customizeWorkout(QWidget):
         }}
         ''')
         customizeButton.setFont(buttonFont)
-        customizeButton.setFixedSize(120, 42)
-        customizeButton.move(649, 53)     
+        customizeButton.setFixedSize(140, 42)
+        customizeButton.move(787, 53)   
         customizeButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
         # customizeButton.clicked.connect(self.customizeWindow)
@@ -172,9 +177,13 @@ class customizeWorkout(QWidget):
             border: none;
             border-radius: 20px;
         }}
+        QPushButton:hover {{
+            color: {button_color};
+        }}
+
         ''')
         planButton.setFont(buttonFont)
-        planButton.move(807, 58)
+        planButton.move(956, 58)
         planButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
         planButton.clicked.connect(self.planWindow)
@@ -189,28 +198,17 @@ class customizeWorkout(QWidget):
             border: none;
             border-radius: 20px;
         }}
+        QPushButton:hover {{
+            color: {button_color};
+        }}
+
         ''')
         listButton.setFont(buttonFont)
-        listButton.move(898, 58)
+        listButton.move(1047, 58)
         listButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
         listButton.clicked.connect(self.listWindow)
         
-        # tombol history
-        historyButton = QPushButton(self)
-        historyButton.setText('History')
-        historyButton.setStyleSheet(f'''
-        QPushButton {{
-            color: {text_color};
-            background-color: {background};
-            border: none;
-            border-radius: 20px;
-        }}
-        ''')
-        historyButton.setFont(buttonFont)
-        historyButton.move(979, 58)
-        historyButton.setCursor(
-            QCursor(Qt.CursorShape.PointingHandCursor))
         
         # foto profil
         profilePhoto = QLabel(self)
@@ -245,20 +243,12 @@ class customizeWorkout(QWidget):
             exLabel1.setStyleSheet(styleSheet5)
             #add gif
             
-            # pic = QLabel(exLabel)
-            # # pixmap = QPixmap()
-            # # pixmap.loadFromData(image)
-            # pic.setPixmap(QPixmap('img/exe-pushup.gif').scaled(79, 79))
-            # pic.move(10, 10)
-            # pic.setFixedSize(79, 79)
-            # pic.setStyleSheet(styleSheet5)
+            pic = QLabel(exLabel)
+            pic.setPixmap(QPixmap(self.listEx[i][6]).scaled(79, 79))
+            pic.move(10, 10)
+            pic.setFixedSize(79, 79)
+            pic.setStyleSheet(styleSheet5)
             
-            # pic.setScaledContents(True)
-            gif = QMovie('img/exe-pushup.gif')
-            exLabel1.setMovie(gif)
-            gif.start()
-            gif.setScaledSize(QSize(79, 79))
-            gif.setSpeed(200)
 
             addButton = QPushButton(exLabel)
             addButton.setIcon(QIcon('img/add button.png'))
@@ -313,6 +303,10 @@ class customizeWorkout(QWidget):
             self.latihan = cur.execute(f"SELECT exercise_id FROM daftar_latihan NATURAL JOIN latihan_program WHERE program_id = {self.program_id}").fetchall()
             print(self.latihan)
             for i in range(len(self.latihan)):
+                button = addButtonList[i]
+                button.setEnabled(False)
+                button.setIcon(QIcon('img/check button.png'))
+                button.setIconSize(QPixmap('img/check button.png').size())
                 area2.append(self.latihan[i][0])
                 exLabel = QLabel(self)
                 exLabel.setFixedSize(367, 99)
@@ -322,12 +316,17 @@ class customizeWorkout(QWidget):
                 exLabel1.setFixedSize(79, 79)
                 exLabel1.setStyleSheet(styleSheet5)
                 
-                #add gif
-                gif = QMovie('img/exe-pushup.gif')
-                exLabel1.setMovie(gif)
-                gif.start()
-                gif.setScaledSize(QSize(79, 79))
-                gif.setSpeed(100)
+                pic = QLabel(exLabel)
+                pic.setPixmap(QPixmap(self.listEx[i][6]).scaled(79, 79))
+                pic.move(10, 10)
+                pic.setFixedSize(79, 79)
+                pic.setStyleSheet(styleSheet5)
+                # #add gif
+                # gif = QMovie('img/exe-pushup.gif')
+                # exLabel1.setMovie(gif)
+                # gif.start()
+                # gif.setScaledSize(QSize(79, 79))
+                # gif.setSpeed(100)
                 title = QLabel(exLabel)
                 title.setText(f'<font style="font-size:24px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][1]}<b>')
                 title.move(100, 15)
@@ -363,12 +362,17 @@ class customizeWorkout(QWidget):
             exLabel1.setFixedSize(79, 79)
             exLabel1.setStyleSheet(styleSheet5)
             
-            #add gif
-            gif = QMovie('img/exe-pushup.gif')
-            exLabel1.setMovie(gif)
-            gif.start()
-            gif.setScaledSize(QSize(79, 79))
-            gif.setSpeed(100)
+            pic = QLabel(exLabel)
+            pic.setPixmap(QPixmap(self.listEx[i][6]).scaled(79, 79))
+            pic.move(10, 10)
+            pic.setFixedSize(79, 79)
+            pic.setStyleSheet(styleSheet5)
+            # #add gif
+            # gif = QMovie('img/exe-pushup.gif')
+            # exLabel1.setMovie(gif)
+            # gif.start()
+            # gif.setScaledSize(QSize(79, 79))
+            # gif.setSpeed(100)
             title = QLabel(exLabel)
             title.setText(f'<font style="font-size:24px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][1]}<b>')
             title.move(100, 15)
@@ -398,30 +402,37 @@ class customizeWorkout(QWidget):
                             button.setEnabled(True)
                             button.setIcon(QIcon('img/add button.png'))
                             button.setIconSize(QPixmap('img/add button.png').size())
+                            
         def saveButtonClicked():
-            if(progNameInput.text() == '' or scrollLayout2 == []):
+            if(progNameInput.text() == ''):
                 QMessageBox.about(self, "Error", "Please input program name")
+                # QMessageBox.close()
             else:
-                QMessageBox.about(self, "Success", "Program saved")
-                # self.close()
-                cur = self.con.cursor()
-                data = cur.execute("SELECT program_id FROM program")
-                lenProg = len(data.fetchall())
-                cur.execute(
-                    f"INSERT INTO program (program_id, title_program) VALUES ({lenProg+1} ,'{progNameInput.text()}')"
-                    )
-                for i in area2:
+                if(area2 == []):
+                    QMessageBox.about(self, "Error", "Please add exercise")
+                    # QMessageBox.close()
+                else:
+                    QMessageBox.about(self, "Success", "Program saved")
+                    # self.close()
+                    cur = self.con.cursor()
+                    data = cur.execute("SELECT program_id FROM program")
+                    lenProg = len(data.fetchall())
                     cur.execute(
-                        f"INSERT INTO latihan_program (program_id, exercise_id) VALUES ({lenProg+1} ,{i})"
+                        f"INSERT INTO program (program_id, title_program) VALUES ({lenProg+1} ,'{progNameInput.text()}')"
                         )
-                print(lenProg)
-                self.con.commit()
+                    for i in area2:
+                        cur.execute(
+                            f"INSERT INTO latihan_program (program_id, exercise_id) VALUES ({lenProg+1} ,{i})"
+                            )
+                    print(lenProg)
+                    self.con.commit()
+            
                 
+            
+
+            
                 
-                
-                
-                # self.parent().show()
-            # print(area2)
+    
         font = QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(28)
