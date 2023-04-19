@@ -220,7 +220,10 @@ class dashboard(QWidget):
         self.kanan.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.kanan.clicked.connect(lambda:self.next(historyIdx))
 
-        if(self.index_history == len(historyIdx)-1):
+        if (len(historyIdx) == 1):
+            self.kiri.hide()
+            self.kanan.hide()
+        elif(self.index_history == len(historyIdx)-1):
             self.kanan.hide()
             self.kiri.show()
         elif (self.index_history == 0):
