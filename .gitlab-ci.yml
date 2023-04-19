@@ -8,11 +8,6 @@ stages:
   - linting
   - test
 
-isort:
-  stage: linting
-  script:
-    - python -m isort . --check-only
-
 pylint:
   stage: linting
   script:
@@ -20,6 +15,8 @@ pylint:
 
 pytest:
   stage: test
+  tags:
+    - rpl
   script:
     - pytest
   only:
