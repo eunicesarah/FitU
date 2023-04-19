@@ -36,7 +36,8 @@ class customizeWorkout(QWidget):
         self.label = QLabel("")
         self.label.setParent(self)
         self.setFixedSize(1280, 720)
-        self.setWindowTitle("FIT-U - Customize Workout")
+        self.setWindowTitle("FitU - Customize Workout")
+        self.setWindowIcon(QIcon("img/logo.png"))
         self.setStyleSheet("background-color: #5A8D6C;")
         self.elements()
     
@@ -269,10 +270,10 @@ class customizeWorkout(QWidget):
             title.move(100, 15)
             repDur = QLabel(exLabel)
             if(count<8):
-                repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[count][4]} Detik<b>')
+                repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[count][4]} Seconds<b>')
                 repDur.move(100, 60)
             else:
-                repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[count][5]} Repetisi<b>')
+                repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[count][5]} Repetition<b>')
                 repDur.move(100,60)
             scrollLayout.addWidget(exLabel)
 
@@ -404,7 +405,7 @@ class customizeWorkout(QWidget):
                             button.setIconSize(QPixmap('img/add button.png').size())
                             
         def saveButtonClicked():
-            if(progNameInput.text() == ''):
+            if(progNameInput.text().isalpha() == False):
                 QMessageBox.about(self, "Error", "Please input program name")
                 # QMessageBox.close()
             else:
@@ -459,8 +460,8 @@ class customizeWorkout(QWidget):
         progText.move(599, 182)
         
         progNameInput = QLineEdit(self)
-        progNameInput.move(840, 189)
-        progNameInput.setFixedSize(320, 41)
+        progNameInput.move(840, 184)
+        progNameInput.setFixedSize(320, 50)
         progNameInput.setFont(QFont("Segoe UI", 14))
         progNameInput.setStyleSheet('''
             padding: 11px 30px 11px 30px;
