@@ -404,23 +404,33 @@ class customizeWorkout(QWidget):
                             button.setIconSize(QPixmap('img/add button.png').size())
                             
         def saveButtonClicked():
-            if(progNameInput.text() == '' or scrollLayout2 == []):
+            if(progNameInput.text() == ''):
                 QMessageBox.about(self, "Error", "Please input program name")
+                # QMessageBox.close()
             else:
-                QMessageBox.about(self, "Success", "Program saved")
-                # self.close()
-                cur = self.con.cursor()
-                data = cur.execute("SELECT program_id FROM program")
-                lenProg = len(data.fetchall())
-                cur.execute(
-                    f"INSERT INTO program (program_id, title_program) VALUES ({lenProg+1} ,'{progNameInput.text()}')"
-                    )
-                for i in area2:
+                if(area2 == []):
+                    QMessageBox.about(self, "Error", "Please add exercise")
+                    # QMessageBox.close()
+                else:
+                    QMessageBox.about(self, "Success", "Program saved")
+                    # self.close()
+                    cur = self.con.cursor()
+                    data = cur.execute("SELECT program_id FROM program")
+                    lenProg = len(data.fetchall())
                     cur.execute(
-                        f"INSERT INTO latihan_program (program_id, exercise_id) VALUES ({lenProg+1} ,{i})"
+                        f"INSERT INTO program (program_id, title_program) VALUES ({lenProg+1} ,'{progNameInput.text()}')"
                         )
-                print(lenProg)
-                self.con.commit()
+                    for i in area2:
+                        cur.execute(
+                            f"INSERT INTO latihan_program (program_id, exercise_id) VALUES ({lenProg+1} ,{i})"
+                            )
+                    print(lenProg)
+                    self.con.commit()
+            
+                
+            
+
+            
                 
     
         font = QFont()
