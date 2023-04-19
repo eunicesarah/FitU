@@ -2,6 +2,11 @@ import pytest
 from PyQt6.QtWidgets import QApplication, QLineEdit, QRadioButton, QCheckBox, QPushButton
 from PyQt6.QtCore import Qt
 
+import sys
+import os
+
+path = os.getcwd()
+sys.path.insert(0,f"{path}/src")
 from register import register
 
 @pytest.fixture

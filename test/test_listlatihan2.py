@@ -1,4 +1,9 @@
 from PyQt6.QtWidgets import QApplication
+import sys
+import os
+
+path = os.getcwd()
+sys.path.insert(0,f"{path}/src")
 from listlatihan2 import listLatihan2
 from PyQt6.QtCore import Qt, QSize, pyqtSignal
 from PyQt6.QtGui import QIcon, QPixmap, QCursor, QFont, QMovie

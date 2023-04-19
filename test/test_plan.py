@@ -3,7 +3,11 @@ import pytest
 from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QPixmap, QCursor, QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QScrollArea
+import sys
+import os
 
+path = os.getcwd()
+sys.path.insert(0,f"{path}/src")
 from plan import plan
 
 @pytest.fixture

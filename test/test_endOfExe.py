@@ -3,8 +3,13 @@ import sys
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QLineEdit, QPushButton, QRadioButton, QCheckBox, QMessageBox
 from PyQt6.QtGui import QFont, QPixmap, QCursor
 from PyQt6.QtCore import Qt, pyqtSignal
-from endOfExercise import endOfExe
+import sys
+import os
 import pytest
+
+path = os.getcwd()
+sys.path.insert(0,f"{path}/src")
+from endOfExercise import endOfExe
 
 def test_endOfExe(qtbot):
     window = endOfExe()

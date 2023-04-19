@@ -1,6 +1,11 @@
 import pytest
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QPushButton
 from PyQt6.QtCore import Qt, QTimer, QTime
+import sys
+import os
+
+path = os.getcwd()
+sys.path.insert(0,f"{path}/src")
 from plan2 import plan2
 
 @pytest.fixture

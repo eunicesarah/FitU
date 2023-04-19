@@ -1,5 +1,9 @@
 import pytest
 import sys
+import os
+
+path = os.getcwd()
+sys.path.insert(0,f"{path}/src")
 
 from PyQt6.QtCore import Qt, pyqtSignal, QSize
 from PyQt6.QtGui import QCursor, QFont, QPixmap, QMovie, QIcon
