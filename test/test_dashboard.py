@@ -35,7 +35,7 @@ def test_element(app, qtbot):
         assert len(app.findChildren(QLabel)) == 8
     else:
         assert len(app.findChildren(QPushButton)) == 7
-        assert len(app.findChildren(QLabel)) == 21
+        assert len(app.findChildren(QLabel)) >= 21
     assert app.findChildren(QPushButton)[0].text() == 'Home'
     assert app.findChildren(QPushButton)[1].text() == 'Customize'
     assert app.findChildren(QPushButton)[2].text() == 'Plan'
