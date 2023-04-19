@@ -293,7 +293,6 @@ class customizeWorkout(QWidget):
                 show.append(temp[0])
             for i in range(len(self.latihan)):
                 area2.append(self.latihan[i][0])
-                
                 exLabell = QLabel(self)
                 exLabell.setFixedSize(367, 99)
                 exLabell.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
@@ -301,7 +300,14 @@ class customizeWorkout(QWidget):
                 exLabel1.move(10, 10)
                 exLabel1.setFixedSize(79, 79)
                 exLabel1.setStyleSheet(styleSheet5)
-                
+                temp = self.latihan[i][0] - 200
+                if temp>0:
+                    temp+=7
+                else:
+                    temp+=99
+                button = addButtonList[temp]
+                button.setEnabled(False)
+                button.setIcon(QIcon('img/check button.png'))    
                 pic = QLabel(exLabell)
                 pic.setPixmap(QPixmap(show[i][3]).scaled(79, 79))
                 pic.move(10, 10)
@@ -318,16 +324,15 @@ class customizeWorkout(QWidget):
                 else:
                     repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{show[i][2]} Repetition<b>')
                     repDur.move(100,60)
-                deleteButtonn = QPushButton(exLabell)
-                deleteButtonn.setIcon(QIcon('img/delete button.png'))
-                deleteButtonn.setIconSize(QPixmap('img/delete button.png').size())
-                deleteButtonn.setGeometry(320, 55, 36, 36)
-                deleteButtonn.move(320, 55)
-                deleteButtonn.setCursor(
-                    QCursor(Qt.CursorShape.PointingHandCursor))
-                deleteButtonn.clicked.connect(lambda checked, index=i: handleDeleteButtonClickedd(index))
+                # deleteButtonn = QPushButton(exLabell)
+                # deleteButtonn.setIcon(QIcon('img/delete button.png'))
+                # deleteButtonn.setIconSize(QPixmap('img/delete button.png').size())
+                # deleteButtonn.setGeometry(320, 55, 36, 36)
+                # deleteButtonn.move(320, 55)
+                # deleteButtonn.setCursor(
+                #     QCursor(Qt.CursorShape.PointingHandCursor))
+                # deleteButtonn.clicked.connect(lambda checked, index=i: handleDeleteButtonClickedd(index, exLabell, scrollLayout2))
                 scrollLayout2.addWidget(exLabell)
-                print(area2)
                 
         def handleButtonClicked(i, buttonList):
             area2.append(self.listEx[i][0])
@@ -367,19 +372,19 @@ class customizeWorkout(QWidget):
             deleteButton.clicked.connect(lambda checked, index=i: handleDeleteButtonClicked(index, exLabel, scrollLayout2))
             scrollLayout2.addWidget(exLabel)
         
-        def handleDeleteButtonClickedd(index):
-            # area2.remove(self.latihan[index][0])
-            print(index)
-            exLabel = scrollLayout2.itemAt(index).widget()
-            scrollLayout2.removeWidget(exLabel)
-            if exLabel is not None:
-                exLabel.setParent(None)
+        # def handleDeleteButtonClickedd(index):
+        #     # area2.remove(self.latihan[index][0])
+        #     print(index)
+        #     # exLabel = scrollLayout2.itemAt(index).widget()
+        #     exLabel.setParent(None)
+        #     scrollLayout2.removeWidget(exLabel)
+        #     if exLabel is not None:
+        #         exLabel.setParent(None)
             
             
-            scrollLayout2.removeWidget(exLabel)
-            # exLabel.deleteLater()
+        #     scrollLayout2.removeWidget(exLabel)
+        #     # exLabel.deleteLater()
 
-            
                              
         def handleDeleteButtonClicked(index, exLabel, layout):  
             area2.remove(self.listEx[index][0])
