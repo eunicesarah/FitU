@@ -1,13 +1,11 @@
 import sqlite3
 import sys
-import textwrap
 from functools import partial
 
 from PyQt6.QtCore import Qt, QSize, pyqtSignal
 from PyQt6.QtGui import QIcon, QPixmap, QCursor, QFont, QMovie
 from PyQt6.QtWidgets import (QWidget, QApplication, QWidget,
                              QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QScrollArea, QDialog)
-# from PyQt6 import QtWidgets
 
 background = '#5A8D6C'
 button_color = '#174728'
@@ -15,8 +13,7 @@ text_color = '#EEEEE2'
 card_color = '#D2DCC4'
 
 class listLatihan2(QWidget):
-    
-    
+
     switch = pyqtSignal(str, int, dict)
     def __init__(self):
         super().__init__()    
@@ -143,29 +140,7 @@ class listLatihan2(QWidget):
         listButton.move(1020, 53)
         listButton.setCursor(
             QCursor(Qt.CursorShape.PointingHandCursor))
-        # listButton.clicked.connect(self.listWindow)
-        
-        
-        # # tombol history
-        # historyButton = QPushButton(self)
-        # historyButton.setText('History')
-        # historyButton.setStyleSheet(f'''
-        # QPushButton {{
-        #     color: {text_color};
-        #     background-color: {background};
-        #     border: none;
-        #     border-radius: 20px;
-        #     font-weight: bold;
-        # }}
-        # QPushButton:hover {{
-        #     color: {button_color};
-        # }}
-        # ''')
-        # historyButton.setFont(buttonFont)
-        # historyButton.move(979, 58)
-        # historyButton.setCursor(
-        #     QCursor(Qt.CursorShape.PointingHandCursor))
-        
+
         # foto profil
         profilePhoto = QLabel(self)
         profilePhoto.setPixmap(QPixmap('img/profile-dashboard.png'))
@@ -188,7 +163,6 @@ class listLatihan2(QWidget):
             QScrollBar:vertical {
                 background-color: #D2DCC4;
                 width: 15px;
-                margin: 20px 0 20px 0;
             }
             QScrollBar::handle:vertical {
                 background-color: #174728;
@@ -199,8 +173,6 @@ class listLatihan2(QWidget):
                 background-color: #D2DCC4;
                 subcontrol-origin: margin;
                 subcontrol-position: top;
-                border-top-left-radius: 6px;
-                border-top-right-radius: 6px;
             }
             QScrollBar::add-line:vertical {
                 top: 0;
