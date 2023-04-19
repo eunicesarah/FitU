@@ -1,11 +1,9 @@
 import sqlite3
 import sys
 
-from PyQt6.QtCore import Qt, QSize, QPropertyAnimation, QAbstractAnimation, QEasingCurve, QAnimationGroup, pyqtSignal
-from PyQt6.QtGui import QIcon, QPixmap, QCursor, QFont, QMovie
-from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QGridLayout,
-                             QGroupBox, QRadioButton, QCheckBox, QMessageBox,
-                             QLabel, QLineEdit, QVBoxLayout, QPushButton, QScrollArea, QGraphicsOpacityEffect)
+from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtGui import QIcon, QPixmap, QCursor, QFont
+from PyQt6.QtWidgets import (QApplication, QWidget, QMessageBox, QLabel, QLineEdit, QVBoxLayout, QPushButton, QScrollArea)
 
 background = '#5A8D6C'
 button_color = '#174728'
@@ -210,7 +208,6 @@ class customizeWorkout(QWidget):
             QCursor(Qt.CursorShape.PointingHandCursor))
         listButton.clicked.connect(self.listWindow)
         
-        
         # foto profil
         profilePhoto = QLabel(self)
         profilePhoto.setPixmap(QPixmap('img/profile-dashboard.png'))
@@ -229,10 +226,9 @@ class customizeWorkout(QWidget):
         scrollLayout = QVBoxLayout(scrollWidget)
         scrollWidget.setStyleSheet("background-color: #D2DCC4; border-radius: 20px;")
         scrollWidget.setLayout(scrollLayout)
-
         scroll.verticalScrollBar().setStyleSheet(scroll_bar_style)
+        
         addButtonList = []
-        exLabelList = []
         count = 0
         for i in range(16):
             exLabel = QLabel(self)  
@@ -242,15 +238,11 @@ class customizeWorkout(QWidget):
             exLabel1.move(10, 10)
             exLabel1.setFixedSize(79, 79)
             exLabel1.setStyleSheet(styleSheet5)
-            #add gif
-            
             pic = QLabel(exLabel)
             pic.setPixmap(QPixmap(self.listEx[i][6]).scaled(79, 79))
             pic.move(10, 10)
             pic.setFixedSize(79, 79)
             pic.setStyleSheet(styleSheet5)
-            
-
             addButton = QPushButton(exLabel)
             addButton.setIcon(QIcon('img/add button.png'))
             addButton.setIconSize(QPixmap('img/add button.png').size())
@@ -258,14 +250,9 @@ class customizeWorkout(QWidget):
             addButton.move(320, 55)
             addButton.setCursor(
                 QCursor(Qt.CursorShape.PointingHandCursor))
-            # Tambahkan addButton ke dalam list
             addButtonList.append(addButton)
-            exLabelList.append(exLabel)
-            # Hubungkan fungsi handleButtonClicked ke addButton
             addButton.clicked.connect(lambda checked, index=i: handleButtonClicked(index, addButtonList))
-            # addButton.clicked.connect(lambda checked, index=i: handleButtonClicked2(index, addButtonList))
             title = QLabel(exLabel)
-            # title.setText(f'<b><p><font style="font-size:24px;" color="#D2DCC4">{self.listEx[i][1]}</font><tab></p></b> <b><p><font color="#D2DCC4" style="font-size:14px;">{self.listEx[i][4]} Repetisi</font></p><b>')
             title.setText(f'<font style="font-size:24px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[count][1]}<b>')
             title.move(100, 15)
             repDur = QLabel(exLabel)
@@ -281,14 +268,13 @@ class customizeWorkout(QWidget):
                 QCursor(Qt.CursorShape.PointingHandCursor))
             count+=1
         scroll.setWidget(scrollWidget)
-        #greenCard2
         greenCard2 = QLabel(self)
         greenCard2.move(577, 155)
         greenCard2.setFixedSize(604, 534)
         greenCard2.setStyleSheet(styleSheet)
         scroll2 = QScrollArea(self)
         scroll2.setWidgetResizable(True)
-        scroll2.setGeometry(620, 250, 410, 429) # mengatur posisi dan ukuran QScrollArea
+        scroll2.setGeometry(620, 250, 410, 429)
         scroll2.setStyleSheet("background-color: #D2DCC4;border-radius: none;")
         scrollWidget2 = QWidget(scroll2)
         scrollLayout2 = QVBoxLayout(scrollWidget2)
@@ -298,81 +284,69 @@ class customizeWorkout(QWidget):
         scroll2.setWidget(scrollWidget2)
         
         area2 = []
-
         if self.program_id != 0:
             cur = self.con.cursor()
             self.latihan = cur.execute(f"SELECT exercise_id FROM daftar_latihan NATURAL JOIN latihan_program WHERE program_id = {self.program_id}").fetchall()
+            show = []
             for i in range(len(self.latihan)):
-                button = addButtonList[i]
-                button.setEnabled(False)
-                button.setIcon(QIcon('img/check button.png'))
-                button.setIconSize(QPixmap('img/check button.png').size())
+                temp = cur.execute(f"SELECT title, duration, repetition, gif FROM daftar_latihan WHERE exercise_id = {self.latihan[i][0]}").fetchall()
+                show.append(temp[0])
+            for i in range(len(self.latihan)):
                 area2.append(self.latihan[i][0])
-                exLabel = QLabel(self)
-                exLabel.setFixedSize(367, 99)
-                exLabel.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
-                exLabel1 = QLabel(exLabel)
+                
+                exLabell = QLabel(self)
+                exLabell.setFixedSize(367, 99)
+                exLabell.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
+                exLabel1 = QLabel(exLabell)
                 exLabel1.move(10, 10)
                 exLabel1.setFixedSize(79, 79)
                 exLabel1.setStyleSheet(styleSheet5)
                 
-                pic = QLabel(exLabel)
-                pic.setPixmap(QPixmap(self.listEx[i][6]).scaled(79, 79))
+                pic = QLabel(exLabell)
+                pic.setPixmap(QPixmap(show[i][3]).scaled(79, 79))
                 pic.move(10, 10)
                 pic.setFixedSize(79, 79)
                 pic.setStyleSheet(styleSheet5)
-                # #add gif
-                # gif = QMovie('img/exe-pushup.gif')
-                # exLabel1.setMovie(gif)
-                # gif.start()
-                # gif.setScaledSize(QSize(79, 79))
-                # gif.setSpeed(100)
-                title = QLabel(exLabel)
-                title.setText(f'<font style="font-size:24px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][1]}<b>')
+                
+                title = QLabel(exLabell)
+                title.setText(f'<font style="font-size:24px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{show[i][0]}<b>')
                 title.move(100, 15)
-                repDur = QLabel(exLabel)
-                if(i<8):
-                        repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][4]} Seconds<b>')
+                repDur = QLabel(exLabell)
+                if(show[i][1] != None):
+                        repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{show[i][1]} Seconds<b>')
                         repDur.move(100, 60)
                 else:
-                    repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][5]} Repetition<b>')
+                    repDur.setText(f'<font style="font-size:14px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{show[i][2]} Repetition<b>')
                     repDur.move(100,60)
-                deleteButton = QPushButton(exLabel)
-                deleteButton.setIcon(QIcon('img/delete button.png'))
-                deleteButton.setIconSize(QPixmap('img/delete button.png').size())
-                deleteButton.setGeometry(320, 55, 36, 36)
-                deleteButton.move(320, 55)
-                deleteButton.setCursor(
+                deleteButtonn = QPushButton(exLabell)
+                deleteButtonn.setIcon(QIcon('img/delete button.png'))
+                deleteButtonn.setIconSize(QPixmap('img/delete button.png').size())
+                deleteButtonn.setGeometry(320, 55, 36, 36)
+                deleteButtonn.move(320, 55)
+                deleteButtonn.setCursor(
                     QCursor(Qt.CursorShape.PointingHandCursor))
-                deleteButton.clicked.connect(lambda checked, index=i: handleDeleteButtonClicked(index, exLabel, scrollLayout2))
-                scrollLayout2.addWidget(exLabel)
-
+                deleteButtonn.clicked.connect(lambda checked, index=i: handleDeleteButtonClickedd(index))
+                scrollLayout2.addWidget(exLabell)
+                print(area2)
+                
         def handleButtonClicked(i, buttonList):
-
             area2.append(self.listEx[i][0])
             button = buttonList[i]
             button.setEnabled(False)
             button.setIcon(QIcon('img/check button.png'))
             button.setIconSize(QPixmap('img/check button.png').size())
-            exLabel = QLabel(self   )
+            exLabel = QLabel(self)
             exLabel.setFixedSize(367, 99)
             exLabel.setStyleSheet("background-color: #5A8D6C; border-radius: 20px;")
             exLabel1 = QLabel(exLabel)
             exLabel1.move(10, 10)
             exLabel1.setFixedSize(79, 79)
             exLabel1.setStyleSheet(styleSheet5)
-            
             pic = QLabel(exLabel)
             pic.setPixmap(QPixmap(self.listEx[i][6]).scaled(79, 79))
             pic.move(10, 10)
             pic.setFixedSize(79, 79)
             pic.setStyleSheet(styleSheet5)
-            # #add gif
-            # gif = QMovie('img/exe-pushup.gif')
-            # exLabel1.setMovie(gif)
-            # gif.start()
-            # gif.setScaledSize(QSize(79, 79))
-            # gif.setSpeed(100)
             title = QLabel(exLabel)
             title.setText(f'<font style="font-size:24px;" color="#D2DCC4"; font-family="Sogoe UI";><b>{self.listEx[i][1]}<b>')
             title.move(100, 15)
@@ -392,11 +366,26 @@ class customizeWorkout(QWidget):
                 QCursor(Qt.CursorShape.PointingHandCursor))
             deleteButton.clicked.connect(lambda checked, index=i: handleDeleteButtonClicked(index, exLabel, scrollLayout2))
             scrollLayout2.addWidget(exLabel)
+        
+        def handleDeleteButtonClickedd(index):
+            # area2.remove(self.latihan[index][0])
+            print(index)
+            exLabel = scrollLayout2.itemAt(index).widget()
+            scrollLayout2.removeWidget(exLabel)
+            if exLabel is not None:
+                exLabel.setParent(None)
             
+            
+            scrollLayout2.removeWidget(exLabel)
+            # exLabel.deleteLater()
+
+            
+                             
         def handleDeleteButtonClicked(index, exLabel, layout):  
+            area2.remove(self.listEx[index][0])
             exLabel.setParent(None)
             layout.removeWidget(exLabel)
-            exLabel.deleteLater()
+            # exLabel.deleteLater()
             for i, button in enumerate(addButtonList):
                         if i == index:
                             button.setEnabled(True)
@@ -404,16 +393,13 @@ class customizeWorkout(QWidget):
                             button.setIconSize(QPixmap('img/add button.png').size())
                             
         def saveButtonClicked():
-            if(progNameInput.text().isalpha() == False):
+            if not progNameInput.text().strip():
                 QMessageBox.about(self, "Error", "Please input program name")
-                # QMessageBox.close()
             else:
                 if(area2 == []):
                     QMessageBox.about(self, "Error", "Please add exercise")
-                    # QMessageBox.close()
                 else:
                     QMessageBox.about(self, "Success", "Program saved")
-                    # self.close()
                     cur = self.con.cursor()
                     data = cur.execute("SELECT program_id FROM program")
                     lenProg = len(data.fetchall())
@@ -425,13 +411,7 @@ class customizeWorkout(QWidget):
                             f"INSERT INTO latihan_program (program_id, exercise_id) VALUES ({lenProg+1} ,{i})"
                             )
                     self.con.commit()
-            
-                
-            
 
-            
-                
-    
         font = QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(28)
@@ -467,12 +447,6 @@ class customizeWorkout(QWidget):
             border-radius: 20px;
             color: #D2DCC4;
             background-color: {background};
-        }
-        QLineEdit::focus {
-            color: white;
-            selection-color: black;
-            selection-background-color: white;
-        }
         ''')
   
         saveButton = QPushButton(self)
