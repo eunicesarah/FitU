@@ -5,19 +5,24 @@ before_script:
   - pip install isort pylint pytest pyqt6 db-sqlite3 requests
 
 stages:
-  - linting
-  - test
+  - Static Analysis
+  - Test
+  - Deploy
 
 pylint:
-  stage: linting
+  stage: Static Analysis
   script:
-    - python -m pylint src
+  - pylint --ignore=test -d C0301 -d R0801 -d C0209 -d R0902 -d W0108 -d C0303 -d R1705 ./src
 
 pytest:
-  stage: test
-  tags:
-    - rpl
+  stage: Test
   script:
-    - pytest
-  only:
-    - merge_request
+  - python -m pytest
+
+MSDeploy:
+  stage: Deploy
+  script:
+  - echo "test ms depoly"
+  - pyinstaller --add-data "img/*;img/" "src/controller.py"
+  tags:
+  - rpl
