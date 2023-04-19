@@ -20,42 +20,42 @@ class endOfExe(QWidget):
     def setUpEndOfExe(self):
         self.setStyleSheet('background-color: #5A8D6C')
 
-        congratsSize = QFont()
-        congratsSize.setPointSize(40)
-        congratsSize.setFamily("Segoe UI")
-        congratsSize.setBold(True)
+        self.congratsSize = QFont()
+        self.congratsSize.setPointSize(40)
+        self.congratsSize.setFamily("Segoe UI")
+        self.congratsSize.setBold(True)
 
-        stayHealSize = QFont()
-        stayHealSize.setPointSize(20)
-        stayHealSize.setFamily("Segoe UI")
-        stayHealSize.setBold(True)
+        self.stayHealSize = QFont()
+        self.stayHealSize.setPointSize(20)
+        self.stayHealSize.setFamily("Segoe UI")
+        self.stayHealSize.setBold(True)
 
-        backSize = QFont()
-        backSize.setPointSize(15)
-        backSize.setFamily("Segoe UI")
+        self.backSize = QFont()
+        self.backSize.setPointSize(15)
+        self.backSize.setFamily("Segoe UI")
         # backSize.setBold(True)
 
-        congrats = QLabel(self)
-        congrats.setText("Congratulations")
-        congrats.setFont(congratsSize)
-        congrats.setStyleSheet("color: #EEEEE2")
-        congrats.move(450, 170)
+        self.congrats = QLabel(self)
+        self.congrats.setText("Congratulations")
+        self.congrats.setFont(self.congratsSize)
+        self.congrats.setStyleSheet("color: #EEEEE2")
+        self.congrats.move(450, 170)
 
-        done = QLabel(self)
-        done.setText("you've done the exercise!")
-        done.setFont(congratsSize)
-        done.setStyleSheet("color: #EEEEE2")
-        done.move(325, 250)
+        self.done = QLabel(self)
+        self.done.setText("you've done the exercise!")
+        self.done.setFont(self.congratsSize)
+        self.done.setStyleSheet("color: #EEEEE2")
+        self.done.move(325, 250)
 
-        stayHealthy = QLabel(self)
-        stayHealthy.setText("STAY HEALTHY AND POWERFUL!")
-        stayHealthy.setFont(stayHealSize)
-        stayHealthy.setStyleSheet("color: #EEEEE2")
-        stayHealthy.move(435, 375)
+        self.stayHealthy = QLabel(self)
+        self.stayHealthy.setText("STAY HEALTHY AND POWERFUL!")
+        self.stayHealthy.setFont(self.stayHealSize)
+        self.stayHealthy.setStyleSheet("color: #EEEEE2")
+        self.stayHealthy.move(435, 375)
 
-        backButton = QPushButton(self)
-        backButton.setText("Back To Dashboard")
-        backButton.setStyleSheet('''
+        self.backButtonon = QPushButton(self)
+        self.backButtonon.setText("Back To Dashboard")
+        self.backButtonon.setStyleSheet('''
         QPushButton {
             color: rgba(255, 255, 255, 1);
             background-color:  #174728;
@@ -66,11 +66,12 @@ class endOfExe(QWidget):
             color: #174728;
         }
         ''')
-        backButton.resize(200, 50)
-        backButton.setFont(backSize)
-        backButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        backButton.move(560, 450)
-        backButton.clicked.connect(self.backToDash)
+        self.backButtonon.resize(200, 50)
+        self.backButtonon.setFont(self.backSize)
+        self.backButtonon.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.backButtonon.move(560, 450)
+        self.backButtonon.clicked.connect(self.backToDash)
+
     
 
     def backToDash(self):
