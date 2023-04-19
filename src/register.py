@@ -1,6 +1,6 @@
 import sqlite3
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QLineEdit, QPushButton, QRadioButton, QCheckBox, QMessageBox
-from PyQt6.QtGui import QFont, QPixmap, QCursor
+from PyQt6.QtGui import QFont, QPixmap, QCursor, QIcon
 from PyQt6.QtCore import Qt, pyqtSignal
 import sys
 class register(QWidget):
@@ -9,12 +9,10 @@ class register(QWidget):
         super().__init__()
         self.conn = sqlite3.connect('fitu.db')
         self.setUpWindow()
-        
 
-        # self.setUpRegisterWindow()
-        # self.conn = sqlite3.connect("fitu.db")
     def setUpWindow(self):
         self.setWindowTitle("FitU - Register")
+        self.setWindowIcon(QIcon("img/logo.png"))
         self.setFixedSize(1280, 720)
         self.setUp()
 
@@ -24,7 +22,6 @@ class register(QWidget):
         bacgroundImage = QPixmap("img/register-page.png")
         background.setPixmap(bacgroundImage)
         background.move(0, 0)
-
 
         inputSize = QFont()
         inputSize.setFamily("Segoe UI")
@@ -116,6 +113,7 @@ class register(QWidget):
         }
         QPushButton:hover {
             background-color: #5A8D6C;
+            color: #D2DCC4;
         }
         ''')
         self.registerButton.move(873, 545)
@@ -139,7 +137,9 @@ class register(QWidget):
         self.thin.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
     def register(self):
-        if (self.nameInput == '' or self.age == '' or self.height == '' or self.weight == '' or (not self.male and not self.female) or self.fit == '' or self.thin == ''):
+        if (self.nameInput.text() == '' or self.age.text() == '' or self.height.text() == '' or self.weight.text() == '' 
+        or (not self.male.isChecked() and not self.female.isChecked()) 
+        or (not self.fit.isChecked() and not self.thin.isChecked())):
             msgBox = QMessageBox()
             msgBox.setText("<p>Please fill out the form properly!</p>")
             msgBox.setWindowTitle("Registration Failed")
@@ -148,12 +148,29 @@ class register(QWidget):
             msgBox.setStandardButtons(QMessageBox.StandardButton.Ok)
             msgBox.exec()
             return
+        # elif (not self.nameInput.text().isalpha() and self.nameInput.text().isspace()):
+        #     msgBox = QMessageBox()
+        #     msgBox.setText("<p>Name must be in alphabet</p>")
+        #     msgBox.setWindowTitle("Registration Failed")
+        #     msgBox.setIcon(QMessageBox.Icon.Warning)
+        #     msgBox.setStyleSheet("background-color: white")
+        #     msgBox.setStandardButtons(QMessageBox.StandardButton.Ok)
+        #     msgBox.exec()
+        #     return
+        
+        elif not self.age.text().isdigit() or not self.height.text().isdigit() or not self.weight.text().isdigit():
+            msgBox = QMessageBox()
+            msgBox.setText("<p>Age, Height, and Weight must be in number</p>")
+            msgBox.setWindowTitle("Registration Failed")
+            msgBox.setIcon(QMessageBox.Icon.Warning)
+            msgBox.setStyleSheet("background-color: white")
+            msgBox.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msgBox.exec()
+
         else:
             c = self.conn.cursor()
             if (self.female.isChecked()):
-                print("female")
                 if (self.fit.isChecked() == self.thin.isChecked()):
-                    print("both")
                     c.execute(
                         f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit, thin', 'female', '{self.age.text()}')"
                     )
@@ -162,10 +179,8 @@ class register(QWidget):
                     c.execute(
                         f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'thin', 'female', '{self.age.text()}')"
                     )
-                    print("thin")
                     self.conn.commit()
                 elif (self.fit.isChecked()):
-                    print("fit")
                     c.execute(
                         f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit', 'female', '{self.age.text()}')"
                     )
@@ -175,22 +190,18 @@ class register(QWidget):
 
 
             elif(self.male.isChecked()):
-                print("male")
                 if(self.fit.isChecked() and self.thin.isChecked()):
-                    print("both")
                     c.execute(
                         f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit, thin', 'male', '{self.age.text()}')"
                     )
                     self.conn.commit()
                 elif (self.thin.isChecked()):
-                    print("thin")
                     c.execute(
                         f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'thin', 'male', '{self.age.text()}')"
                     )
                     self.conn.commit()
 
                 elif (self.fit.isChecked()):
-                    print("fit")
                     c.execute(
                         f"INSERT INTO user (name, height, weight, goal, gender, age) VALUES ('{self.nameInput.text()}', '{self.height.text()}', '{self.weight.text()}', 'fit', 'male', '{self.age.text()}')"
                     )
@@ -203,11 +214,7 @@ class register(QWidget):
             self.height.clear()
             self.weight.clear()
             self.switch.emit()
-    
-    # def showDashboard(self):
-    #     self.switch.emit("dashboard", {})
 
-                    
 if __name__ == "__main__":
     
     app = QApplication(sys.argv)

@@ -36,8 +36,8 @@ class customizeWorkout(QWidget):
         self.label = QLabel("")
         self.label.setParent(self)
         self.setFixedSize(1280, 720)
-        self.setWindowTitle("FitU - Customize Workout")
         self.setWindowIcon(QIcon("img/logo.png"))
+        self.setWindowTitle("FitU - Customize Workout")
         self.setStyleSheet("background-color: #5A8D6C;")
         self.elements()
     
@@ -302,7 +302,6 @@ class customizeWorkout(QWidget):
         if self.program_id != 0:
             cur = self.con.cursor()
             self.latihan = cur.execute(f"SELECT exercise_id FROM daftar_latihan NATURAL JOIN latihan_program WHERE program_id = {self.program_id}").fetchall()
-            print(self.latihan)
             for i in range(len(self.latihan)):
                 button = addButtonList[i]
                 button.setEnabled(False)
@@ -425,7 +424,6 @@ class customizeWorkout(QWidget):
                         cur.execute(
                             f"INSERT INTO latihan_program (program_id, exercise_id) VALUES ({lenProg+1} ,{i})"
                             )
-                    print(lenProg)
                     self.con.commit()
             
                 
