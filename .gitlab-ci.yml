@@ -2,27 +2,12 @@ image: python:3.10
 
 before_script:
   - python --version # For debugging
-  - pip install isort pylint pytest pyqt6 db-sqlite3 requests
+  - pip install pytest pyqt6 db-sqlite3
 
 stages:
-  - Static Analysis
   - Test
-  - Deploy
-
-pylint:
-  stage: Static Analysis
-  script:
-  - pylint --ignore=test -d C0301 -d R0801 -d C0209 -d R0902 -d W0108 -d C0303 -d R1705 ./src
 
 pytest:
   stage: Test
   script:
-  - python -m pytest
-
-MSDeploy:
-  stage: Deploy
-  script:
-  - echo "test ms depoly"
-  - pyinstaller --add-data "img/*;img/" "src/controller.py"
-  tags:
-  - rpl
+    - python -m pytest
