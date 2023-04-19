@@ -1,6 +1,6 @@
 # FitU
 
-FitU merupakan sebuah aplikasi desktop yang dapat membantu pengguna untuk menyusun program olahraga secara pribadi. Aplikasi FitU dibuat dan dikembangkan dengan bahasa Pemrograman Python.
+FitU merupakan sebuah aplikasi desktop yang dapat membantu pengguna untuk menyusun program olahraga secara pribadi. Aplikasi FitU menawarkan berbagai jenis latihan yang dapat dipersonalisasi sesuai dengan kebutuhan penggunanya. Aplikasi FitU menawarkan berbagai fitur untuk menunjang latihan penggunanya, seperti contoh gerakan dan instruksi latihan untuk memastikan bahwa pengguna melakukan latihan dengan benar dan aman.
 
 ## Fitur
 
