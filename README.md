@@ -37,8 +37,8 @@ Klik file ```run.bat```
 | Dashboard            | 13521027                       | Agsha Athalla Nurkareem                               |
 | Daftar Latihan       | 13521011                       | Afnan Edsa Ramadhan                                   |
 | Kustomisasi Latihan  | 13521014                       | Muhhamad Syauqi Jannatan                              |
-| Rencana Latihan      | 13521010 </br> 13521013             | Muhamad Salman Hakim Alfarisi </br> Eunice Sarah Siregar   |
-
+| Rencana Latihan      | 13521010 Page Plan             | Muhamad Salman Hakim Alfarisi                         |
+|                      | 13521013 Excercise, End of Exc | Eunice Sarah Siregar                                  |
 ### Registrasi
 
 ![RegisterPage.png](./doc/page-register.png)
