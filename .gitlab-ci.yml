@@ -1,0 +1,23 @@
+image: python:3.10
+
+before_script:
+  - python --version # For debugging
+  - pip install isort pylint pytest pyqt6 db-sqlite3 requests
+
+stages:
+  - linting
+  - test
+
+pylint:
+  stage: linting
+  script:
+    - python -m pylint src
+
+pytest:
+  stage: test
+  tags:
+    - rpl
+  script:
+    - pytest
+  only:
+    - merge_request

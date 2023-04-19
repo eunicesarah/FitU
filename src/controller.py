@@ -192,7 +192,8 @@ class controller:
                             (1, 'Full Body Workout'),
                             (2, 'Upper Body Workout'),
                             (3, 'Lower Body Workout'),
-                            (4, 'Core Workout')
+                            (4, 'Core Workout'),
+                            (5, 'Cardio Workout')
                         """)
 
             cur.execute("""
@@ -209,7 +210,16 @@ class controller:
                             (2, 201),
                             (3, 202),
                             (3, 205),
-                            (3, 106)
+                            (3, 106),
+                            (3, 105),
+                            (4, 203),
+                            (4, 204),
+                            (4, 207),
+                            (4, 208),
+                            (5, 101),
+                            (5, 103),
+                            (5, 208),
+                            (5, 203)
                         """)
             
             cur.execute("""
